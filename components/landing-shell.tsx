@@ -143,11 +143,11 @@ export function LandingShell({
             <Image
               src={appIcon}
               alt="Hustle Post"
-              width={24}
-              height={24}
+              width={32}
+              height={32}
               className="rounded-md object-cover"
             />
-            <span className="text-[15px] font-extrabold tracking-tight text-slate-900">
+            <span className="text-[17px] font-extrabold tracking-tight text-slate-900">
               {dictionary.brand.label}
             </span>
           </div>
@@ -162,7 +162,7 @@ export function LandingShell({
           </nav>
 
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center">
+            <div className="flex items-center">
               <LanguageSwitcher
                 currentLocale={activeLocale}
                 redirectTo={localeRedirectTo}
@@ -173,12 +173,6 @@ export function LandingShell({
                 {dictionary.nav.login}
               </Link>
             )}
-            <Link
-              href={primaryCtaHref}
-              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold !text-[#FFFFFF] transition-all hover:bg-slate-800"
-            >
-              {signedIn ? dictionary.nav.dashboard : dictionary.nav.startFree}
-            </Link>
           </div>
         </div>
       </header>
@@ -203,7 +197,7 @@ export function LandingShell({
           <motion.div variants={fadeUp} className="mt-12 flex flex-col sm:flex-row items-center justify-start gap-5">
             <Link
               href={primaryCtaHref}
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-slate-900 px-9 py-4 text-base font-semibold !text-[#FFFFFF] shadow-[0_8px_20px_-6px_rgba(15,23,42,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_25px_-8px_rgba(15,23,42,0.5)] active:scale-[0.98] active:-translate-y-0"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-[#65C984] px-9 py-4 text-base font-bold text-[#11301F] shadow-[0_8px_20px_-6px_rgba(101,201,132,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_25px_-8px_rgba(101,201,132,0.5)] hover:bg-[#58B975] active:scale-[0.98] active:-translate-y-0"
             >
               {signedIn ? dictionary.hero.signedInPrimaryCta : dictionary.hero.primaryCta}
               <ArrowRight className="h-4 w-4" />
@@ -282,7 +276,7 @@ export function LandingShell({
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href={primaryCtaHref}
-                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-3.5 text-sm font-semibold !text-[#FFFFFF] transition-all hover:bg-emerald-600"
+                className="inline-flex items-center gap-2 rounded-full bg-[#65C984] px-7 py-3.5 text-sm font-bold text-[#11301F] transition-all hover:bg-[#58B975]"
               >
                 {signedIn ? dictionary.hero.signedInPrimaryCta : dictionary.hero.primaryCta}
                 <ArrowRight className="h-4 w-4" />
@@ -359,10 +353,10 @@ export function LandingShell({
                 >
                   <circle cx="230" cy="180" r="36" fill="white" stroke="#E5E7EB" strokeWidth="1.5" />
                   <image
-                    x={211}
-                    y={161}
-                    width={38}
-                    height={38}
+                    x={202}
+                    y={152}
+                    width={56}
+                    height={56}
                     href={appIcon.src}
                     preserveAspectRatio="xMidYMid slice"
                   />
@@ -435,7 +429,7 @@ export function LandingShell({
                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]">{dictionary.features.video1.title}</h2>
                <p className="text-lg text-slate-500 font-medium leading-relaxed mb-10 max-w-lg">{dictionary.features.video1.description}</p>
                <div className="flex flex-wrap items-center gap-4">
-                  <Link href={primaryCtaHref} className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-3.5 text-sm font-semibold !text-[#FFFFFF] transition-all hover:bg-emerald-600 hover:-translate-y-0.5 shadow-md shadow-emerald-500/20">{dictionary.features.video1.primaryCta} <ArrowRight className="h-4 w-4" /></Link>
+                  <Link href={primaryCtaHref} className="inline-flex items-center gap-2 rounded-full bg-[#65C984] px-7 py-3.5 text-sm font-bold text-[#11301F] transition-all hover:bg-[#58B975] hover:-translate-y-0.5 shadow-md shadow-[#65C984]/20">{dictionary.features.video1.primaryCta} <ArrowRight className="h-4 w-4" /></Link>
                   <a href="#demo" className="inline-flex items-center rounded-full border border-slate-200 bg-white px-7 py-3.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">{dictionary.features.video1.secondaryCta}</a>
                </div>
             </motion.div>
@@ -471,7 +465,7 @@ export function LandingShell({
                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]">{dictionary.features.video2.title}</h2>
                <p className="text-lg text-slate-500 font-medium leading-relaxed mb-10 max-w-lg">{dictionary.features.video2.description}</p>
                <div className="flex flex-wrap items-center gap-4">
-                  <Link href={primaryCtaHref} className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-3.5 text-sm font-semibold !text-[#FFFFFF] transition-all hover:bg-emerald-600 hover:-translate-y-0.5 shadow-md shadow-emerald-500/20">{dictionary.features.video2.primaryCta} <ArrowRight className="h-4 w-4" /></Link>
+                  <Link href={primaryCtaHref} className="inline-flex items-center gap-2 rounded-full bg-[#65C984] px-7 py-3.5 text-sm font-bold text-[#11301F] transition-all hover:bg-[#58B975] hover:-translate-y-0.5 shadow-md shadow-[#65C984]/20">{dictionary.features.video2.primaryCta} <ArrowRight className="h-4 w-4" /></Link>
                   <a href="#demo" className="inline-flex items-center rounded-full border border-slate-200 bg-white px-7 py-3.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">{dictionary.features.video2.secondaryCta}</a>
                </div>
             </motion.div>
@@ -487,7 +481,7 @@ export function LandingShell({
                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]">{dictionary.features.video3.title}</h2>
                <p className="text-lg text-slate-500 font-medium leading-relaxed mb-10 max-w-lg">{dictionary.features.video3.description}</p>
                <div className="flex flex-wrap items-center gap-4">
-                  <Link href={primaryCtaHref} className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-3.5 text-sm font-semibold !text-[#FFFFFF] transition-all hover:bg-emerald-600 hover:-translate-y-0.5 shadow-md shadow-emerald-500/20">{dictionary.features.video3.primaryCta} <ArrowRight className="h-4 w-4" /></Link>
+                  <Link href={primaryCtaHref} className="inline-flex items-center gap-2 rounded-full bg-[#65C984] px-7 py-3.5 text-sm font-bold text-[#11301F] transition-all hover:bg-[#58B975] hover:-translate-y-0.5 shadow-md shadow-[#65C984]/20">{dictionary.features.video3.primaryCta} <ArrowRight className="h-4 w-4" /></Link>
                   <a href="#demo" className="inline-flex items-center rounded-full border border-slate-200 bg-white px-7 py-3.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">{dictionary.features.video3.secondaryCta}</a>
                </div>
             </motion.div>
@@ -565,7 +559,7 @@ export function LandingShell({
                   </li>
                 ))}
               </ul>
-              <Link href={pricingCtaHref} className="block w-full py-3.5 px-4 rounded-[14px] bg-emerald-600 text-white text-center font-bold hover:bg-emerald-700 transition-all shadow-[0_4px_14px_0_rgba(16,185,129,0.2)]">
+              <Link href={pricingCtaHref} className="block w-full py-3.5 px-4 rounded-[14px] bg-[#65C984] text-[#11301F] text-center font-bold hover:bg-[#58B975] transition-all shadow-[0_4px_14px_0_rgba(101,201,132,0.3)]">
                 {dictionary.hero.primaryCta}
               </Link>
            </motion.div>

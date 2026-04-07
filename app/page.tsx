@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { LandingShell } from "@/components/landing-shell";
-import { ensureProfile } from "@/lib/db/accounts";
 import { getLandingCopy } from "@/lib/i18n/landing";
 import { buildPathWithSearch, getRequestLocale } from "@/lib/i18n/request";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
@@ -33,25 +32,18 @@ export default async function HomePage({
   const supabase = await createSupabaseServerClient();
 
   if (params.code) {
-    const { error } = await supabase.auth.exchangeCodeForSession(params.code);
-    if (error) {
-      redirect(
-        buildPathWithSearch("/login", {
-          lang: locale,
-          error: error.message,
-        }),
-      );
-    }
+    redirect(
+      buildPathWithSearch("/auth/callback", {
+        code: params.code,
+        next: normalizeNextPath(params.next),
+        lang: locale,
+      }),
+    );
   }
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  if (params.code && user) {
-    await ensureProfile(user);
-    redirect(normalizeNextPath(params.next));
-  }
 
   if (params.error) {
     redirect(
