@@ -5,16 +5,24 @@ type AccountIdentity = Pick<
   "platform" | "platform_user_id" | "username" | "display_name" | "avatar_url"
 >;
 
-export function getConnectedAccountAvatarUrl(account: AccountIdentity) {
+export function getConnectedAccountAvatarCandidates(account: AccountIdentity) {
+  const candidates: string[] = [];
+
   if (account.avatar_url) {
-    return account.avatar_url;
+    candidates.push(account.avatar_url);
   }
 
   if (account.platform === "threads" && account.platform_user_id) {
-    return `https://graph.facebook.com/${account.platform_user_id}/picture?type=large`;
+    candidates.push(
+      `https://graph.facebook.com/${account.platform_user_id}/picture?type=large`,
+    );
   }
 
-  return null;
+  return Array.from(new Set(candidates.filter(Boolean)));
+}
+
+export function getConnectedAccountAvatarUrl(account: AccountIdentity) {
+  return getConnectedAccountAvatarCandidates(account)[0] ?? null;
 }
 
 export function getConnectedAccountDisplayLabel(account: AccountIdentity) {

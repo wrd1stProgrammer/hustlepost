@@ -25,7 +25,7 @@ export function LanguageSwitcher({
         const active = locale === currentLocale;
 
         return (
-          <Link
+          <a
             key={locale}
             href={`/api/locale?locale=${locale}&redirectTo=${encodeURIComponent(redirectTo)}`}
             className={`rounded-full px-3 py-1.5 transition ${
@@ -38,7 +38,7 @@ export function LanguageSwitcher({
             aria-current={active ? "page" : undefined}
           >
             {LOCALE_LABELS[locale]}
-          </Link>
+          </a>
         );
       })}
     </div>

@@ -23,7 +23,7 @@ function normalizeNextPath(path: string) {
 export async function signInWithGoogleAction(formData: FormData) {
   const locale = getLoginLocale(getFormValue(formData, "lang"));
   const nextPath = normalizeNextPath(
-    getFormValue(formData, "next") || "/dashboard",
+    getFormValue(formData, "next") || "/onboarding",
   );
   const appOrigin = getAppOrigin(await headers());
   const callbackUrl = new URL("/auth/callback", appOrigin);
@@ -70,7 +70,7 @@ export async function signInAction(formData: FormData) {
     await ensureProfile(data.user);
   }
 
-  redirect("/dashboard");
+  redirect("/onboarding");
 }
 
 export async function signUpAction(formData: FormData) {
@@ -94,5 +94,5 @@ export async function signUpAction(formData: FormData) {
     await ensureProfile(data.user);
   }
 
-  redirect("/dashboard");
+  redirect("/onboarding");
 }

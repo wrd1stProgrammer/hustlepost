@@ -1,6 +1,9 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import type { ConnectedAccountRecord } from "@/lib/types/db";
 import {
-  getConnectedAccountAvatarUrl,
+  getConnectedAccountAvatarCandidates,
   getConnectedAccountInitial,
 } from "@/lib/accounts/avatar";
 
@@ -24,7 +27,23 @@ export function ConnectedAccountAvatar({
   className = "",
   initialsClassName = "",
 }: ConnectedAccountAvatarProps) {
-  const avatarUrl = getConnectedAccountAvatarUrl(account);
+  const avatarCandidates = useMemo(
+    () => getConnectedAccountAvatarCandidates(account),
+    [
+      account.platform,
+      account.platform_user_id,
+      account.username,
+      account.display_name,
+      account.avatar_url,
+    ],
+  );
+  const [avatarIndex, setAvatarIndex] = useState(0);
+
+  useEffect(() => {
+    setAvatarIndex(0);
+  }, [avatarCandidates]);
+
+  const avatarUrl = avatarCandidates[avatarIndex] ?? null;
   const initial = getConnectedAccountInitial(account);
 
   return (
@@ -36,10 +55,18 @@ export function ConnectedAccountAvatar({
         className={`flex h-full w-full items-center justify-center rounded-full ring-[3px] ring-offset-2 ring-offset-[#f4f5f8] ${ringColorClassName}`}
       >
         {avatarUrl ? (
-          <div
-            className="h-full w-full rounded-full bg-center bg-cover bg-no-repeat"
-            style={{ backgroundImage: `url(${avatarUrl})` }}
-            aria-hidden="true"
+          <img
+            src={avatarUrl}
+            alt=""
+            referrerPolicy="no-referrer"
+            className="h-full w-full rounded-full object-cover"
+            onError={() => {
+              setAvatarIndex((current) =>
+                current < avatarCandidates.length - 1
+                  ? current + 1
+                  : avatarCandidates.length,
+              );
+            }}
           />
         ) : (
           <span

@@ -6,11 +6,11 @@ import { buildAppUrl } from "@/utils/url";
 
 function normalizeNextPath(path: string | null) {
   if (!path) {
-    return "/dashboard";
+    return "/onboarding";
   }
 
   if (!path.startsWith("/") || path.startsWith("//")) {
-    return "/dashboard";
+    return "/onboarding";
   }
 
   return path;
