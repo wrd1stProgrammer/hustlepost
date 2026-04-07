@@ -1,8 +1,12 @@
+"use client";
+
 import type { Locale } from "@/lib/i18n/locales";
 import type { LoginCopy } from "@/lib/i18n/login";
 import Image from "next/image";
 import appIcon from "@/app/assets/icon/icon-192.png";
 import Link from "next/link";
+import { useFormStatus } from "react-dom";
+import { Loader2 } from "lucide-react";
 
 type LoginShellProps = {
   copy: LoginCopy;
@@ -23,6 +27,34 @@ function GoogleGlyph() {
     >
       G
     </span>
+  );
+}
+
+function GoogleSubmitButton({ copy }: { copy: any }) {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="group flex w-full items-center justify-center gap-3 rounded-[18px] border border-slate-200 bg-white px-4 py-3.5 text-[15px] font-bold text-slate-700 transition-all hover:border-[#65C984] hover:bg-slate-50 hover:text-slate-900 shadow-sm cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+    >
+      {pending ? <Loader2 className="h-5 w-5 animate-spin text-slate-400" /> : <GoogleGlyph />}
+      <span>{pending ? "Connecting..." : copy.googleButton}</span>
+    </button>
+  );
+}
+
+function AuthSubmitButton({ copy, isLogin }: { copy: any; isLogin: boolean }) {
+  const { pending } = useFormStatus();
+  return (
+    <button 
+      type="submit" 
+      disabled={pending}
+      className="w-full flex items-center justify-center gap-2 rounded-[18px] bg-[#11301F] px-4 py-4 text-[15px] font-bold text-white transition-all hover:bg-black hover:-translate-y-0.5 shadow-md shadow-[#11301F]/20 cursor-pointer disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
+    >
+      {pending && <Loader2 className="h-5 w-5 animate-spin" />}
+      {isLogin ? copy.signInButton : copy.signUpButton}
+    </button>
   );
 }
 
@@ -76,13 +108,7 @@ export function LoginShell({
             <form action={signInWithGoogleAction} className="mb-8">
               <input type="hidden" name="lang" value={locale} />
               <input type="hidden" name="next" value="/dashboard" />
-              <button
-                type="submit"
-                className="group flex w-full items-center justify-center gap-3 rounded-[18px] border border-slate-200 bg-white px-4 py-3.5 text-[15px] font-bold text-slate-700 transition-all hover:border-[#65C984] hover:bg-slate-50 hover:text-slate-900 shadow-sm cursor-pointer"
-              >
-                <GoogleGlyph />
-                <span>{copy.googleButton}</span>
-              </button>
+              <GoogleSubmitButton copy={copy} />
             </form>
 
             <div className="mb-8 flex items-center gap-4">
@@ -125,12 +151,7 @@ export function LoginShell({
               </label>
 
               <div className="flex flex-col gap-3 mt-4">
-                <button 
-                  type="submit" 
-                  className="w-full rounded-[18px] bg-[#11301F] px-4 py-4 text-[15px] font-bold text-white transition-all hover:bg-black hover:-translate-y-0.5 shadow-md shadow-[#11301F]/20 cursor-pointer"
-                >
-                  {isLogin ? copy.signInButton : copy.signUpButton}
-                </button>
+                <AuthSubmitButton copy={copy} isLogin={isLogin} />
 
                 <div className="text-center mt-3 text-[14px] font-medium text-slate-500">
                   {isLogin ? (

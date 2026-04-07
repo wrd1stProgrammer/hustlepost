@@ -45,7 +45,15 @@ export function RoleSelectionForm() {
                 name="role"
                 value={role.id}
                 checked={isActive}
-                onChange={() => setSelectedRole(role.id)}
+                disabled={pending}
+                onChange={() => {
+                  setSelectedRole(role.id);
+                  startTransition(() => {
+                    const formData = new FormData();
+                    formData.append("role", role.id);
+                    saveRoleAction(formData);
+                  });
+                }}
                 className="hidden"
               />
               <div
@@ -68,15 +76,7 @@ export function RoleSelectionForm() {
         })}
       </div>
 
-      <div className="flex justify-end pt-4">
-        <button
-          type="submit"
-          disabled={pending}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-[#11301F] px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-black disabled:opacity-50 sm:w-auto"
-        >
-          {pending ? "Saving..." : "Continue"}
-        </button>
-      </div>
+
     </form>
   );
 }
@@ -103,13 +103,13 @@ export function PricingDummyStep() {
             <button
               onClick={handleComplete}
               disabled={pending}
-              className={`mt-4 w-full rounded-full px-6 py-3 text-sm font-bold transition-all ${
+              className={`mt-4 w-full rounded-full px-6 py-3 text-sm font-bold transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
                 i === 1
                   ? "bg-[#65C984] text-[#11301F] hover:bg-[#58B975]"
                   : "bg-slate-100 text-slate-900 hover:bg-slate-200"
               }`}
             >
-              Select
+              {pending ? "Applying..." : "Select"}
             </button>
           </div>
         ))}
