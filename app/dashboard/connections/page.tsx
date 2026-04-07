@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import {
-  ensureProfile,
   listConnectedAccounts,
 } from "@/lib/db/accounts";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
@@ -11,7 +11,6 @@ import {
   getConnectedAccountSecondaryLabel,
 } from "@/lib/accounts/avatar";
 import { getRequestLocale } from "@/lib/i18n/request";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { disconnectConnectedAccountAction } from "../actions";
 import { DashboardToast } from "@/components/dashboard-toast";
 
@@ -25,16 +24,12 @@ export default async function DashboardConnectionsPage({
     error?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const t = getDashboardCopy(locale).pages.connections;

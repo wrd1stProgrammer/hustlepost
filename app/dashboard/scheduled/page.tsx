@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
-import { ensureProfile } from "@/lib/db/accounts";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { getIntlLocale } from "@/lib/i18n/locales";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { listScheduledPosts } from "@/lib/db/publishing";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { RefreshCcw, Filter, ChevronDown } from "lucide-react";
 import { ConnectedAccountAvatar } from "@/components/connected-account-avatar";
 import { getScheduledPostReplyTexts } from "@/lib/publishing/replies";
@@ -18,21 +17,19 @@ export default async function DashboardScheduledPage({
     lang?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const t = getDashboardCopy(locale).pages.scheduled;
-  const allPosts = await listScheduledPosts(user.id);
-  const scheduledPosts = allPosts.filter(post => post.status === "scheduled" || post.status === "processing");
+  const scheduledPosts = await listScheduledPosts(user.id, {
+    statuses: ["scheduled", "processing"],
+    includeLatestPublishRuns: false,
+  });
 
   return (
     <div className="p-8 lg:p-12 max-w-[1600px] mx-auto min-h-full">

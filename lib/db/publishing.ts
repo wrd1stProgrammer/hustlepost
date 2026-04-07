@@ -218,6 +218,8 @@ export async function listScheduledPosts(
   options?: {
     workspaceId?: string | null;
     resolveViewMetrics?: boolean;
+    includeLatestPublishRuns?: boolean;
+    statuses?: ScheduledPostRecord["status"][];
   },
 ) {
   const supabase = await createSupabaseServerClient();
@@ -255,6 +257,10 @@ export async function listScheduledPosts(
     `,
     )
     .eq("user_id", userId);
+
+  if (options?.statuses && options.statuses.length > 0) {
+    query = query.in("status", options.statuses);
+  }
 
   if (options?.workspaceId) {
     query = query.eq("workspace_id", options.workspaceId);
@@ -300,6 +306,10 @@ export async function listScheduledPosts(
       )
       .eq("user_id", userId);
 
+    if (options?.statuses && options.statuses.length > 0) {
+      fallbackQuery = fallbackQuery.in("status", options.statuses);
+    }
+
     if (options?.workspaceId) {
       fallbackQuery = fallbackQuery.eq("workspace_id", options.workspaceId);
     }
@@ -324,6 +334,13 @@ export async function listScheduledPosts(
         : post.connected_account ?? null,
       latest_publish_run: null,
     }));
+
+    if (options?.includeLatestPublishRuns === false) {
+      return fallbackScheduledPosts.map((post) => ({
+        ...post,
+        view_metrics: null,
+      }));
+    }
 
     const postsWithPublishRuns = await attachLatestPublishRuns(
       supabase,
@@ -367,6 +384,13 @@ export async function listScheduledPosts(
       : post.connected_account ?? null,
     latest_publish_run: null,
   }));
+
+  if (options?.includeLatestPublishRuns === false) {
+    return scheduledPosts.map((post) => ({
+      ...post,
+      view_metrics: null,
+    }));
+  }
 
   const postsWithPublishRuns = await attachLatestPublishRuns(supabase, scheduledPosts);
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import {
   CheckCircle2,
   ChevronDown,
@@ -11,15 +12,14 @@ import {
   deletePostedThreadsPostAction,
   syncPostedThreadsStatusAction,
 } from "@/app/dashboard/actions";
-import { ensureProfile } from "@/lib/db/accounts";
 import { listScheduledPosts } from "@/lib/db/publishing";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { getIntlLocale } from "@/lib/i18n/locales";
 import { getRequestLocale } from "@/lib/i18n/request";
 import type { SupportedPlatform } from "@/lib/types/db";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { ConnectedAccountAvatar } from "@/components/connected-account-avatar";
 import { DeletePostButton } from "@/components/delete-post-button";
+import { LoadingRefreshButton } from "@/components/loading-refresh-button";
 import { getConnectedAccountDisplayLabel } from "@/lib/accounts/avatar";
 import { DashboardToast } from "@/components/dashboard-toast";
 import { PostImageGallery } from "@/components/post-image-gallery";
@@ -45,20 +45,18 @@ export default async function DashboardPostedPage({
 }: {
   searchParams: Promise<PostedSearchParams>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const copy = getDashboardCopy(locale).pages.posted;
-  const allPosts = await listScheduledPosts(user.id);
+  const allPosts = await listScheduledPosts(user.id, {
+    statuses: ["published", "failed"],
+  });
   const status =
     params.status === "failed"
       ? "failed"
@@ -245,12 +243,7 @@ export default async function DashboardPostedPage({
                 .map((post) => post.id),
             )}
           />
-          <button
-            type="submit"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-500 transition hover:bg-slate-100"
-          >
-            <RefreshCcw className="h-4 w-4" />
-          </button>
+          <LoadingRefreshButton />
         </form>
       </div>
 
@@ -265,35 +258,7 @@ export default async function DashboardPostedPage({
           {sort === "newest" ? copy.newest : copy.oldest}
           <ChevronDown className="h-4 w-4 text-slate-400" />
         </Link>
-        <details className="group relative">
-          <summary className="flex cursor-pointer list-none items-center gap-2 rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700">
-            {platform === "threads"
-              ? copy.threadsOnly
-              : platform === "x"
-                ? copy.xOnly
-                : copy.allPlatforms}
-            <ChevronDown className="h-4 w-4 text-slate-400 transition group-open:rotate-180" />
-          </summary>
-          <div className="absolute left-0 top-[calc(100%+8px)] z-20 min-w-[220px] rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
-            {[
-              { value: "all", label: copy.allPlatforms },
-              { value: "threads", label: copy.threadsOnly },
-              { value: "x", label: copy.xOnly },
-            ].map((option) => (
-              <Link
-                key={option.value}
-                href={buildFilterHref({ platform: option.value as PostedSearchParams["platform"] })}
-                className={`mt-1 block rounded-xl px-3 py-2 text-sm ${
-                  platform === option.value
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-700 hover:bg-slate-50"
-                }`}
-              >
-                {option.label}
-              </Link>
-            ))}
-          </div>
-        </details>
+
         <details className="group relative">
           <summary className="flex cursor-pointer list-none items-center gap-2 rounded-2xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700">
             {range === "7d"
@@ -314,7 +279,7 @@ export default async function DashboardPostedPage({
                 href={buildFilterHref({ range: option.value as PostedSearchParams["range"] })}
                 className={`mt-1 block rounded-xl px-3 py-2 text-sm ${
                   range === option.value
-                    ? "bg-slate-900 text-white"
+                    ? "bg-slate-100 text-slate-900 font-bold"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
@@ -347,7 +312,7 @@ export default async function DashboardPostedPage({
                 href={buildFilterHref({ account: account.id })}
                 className={`mt-1 block rounded-xl px-3 py-2 text-sm ${
                   params.account === account.id
-                    ? "bg-slate-900 text-white"
+                    ? "bg-slate-100 text-slate-900 font-bold"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >

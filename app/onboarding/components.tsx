@@ -48,11 +48,6 @@ export function RoleSelectionForm() {
                 disabled={pending}
                 onChange={() => {
                   setSelectedRole(role.id);
-                  startTransition(() => {
-                    const formData = new FormData();
-                    formData.append("role", role.id);
-                    saveRoleAction(formData);
-                  });
                 }}
                 className="hidden"
               />
@@ -75,8 +70,19 @@ export function RoleSelectionForm() {
           );
         })}
       </div>
-
-
+      <button
+        type="submit"
+        disabled={pending}
+        className="mt-8 flex w-full cursor-pointer items-center justify-center rounded-full bg-[#65C984] py-4 text-[15px] font-bold text-[#11301F] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#58B975] disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {pending ? (
+          <div className="flex items-center gap-2">
+            <div className="h-5 w-5 animate-spin rounded-full border-[2.5px] border-[#11301F] border-t-transparent" />
+          </div>
+        ) : (
+          "Continue"
+        )}
+      </button>
     </form>
   );
 }

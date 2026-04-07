@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
-import { ensureProfile, listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
+import { getCurrentUser } from "@/lib/auth/current-user";
+import { listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { getIntlLocale } from "@/lib/i18n/locales";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { listScheduledPosts } from "@/lib/db/publishing";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { RefreshCcw, Filter, ChevronDown } from "lucide-react";
 import { ConnectedAccountAvatar } from "@/components/connected-account-avatar";
 import { getScheduledPostReplyTexts } from "@/lib/publishing/replies";
@@ -23,16 +23,12 @@ export default async function DashboardAllPostsPage({
     lang?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const t = getDashboardCopy(locale).pages.posts;
@@ -50,6 +46,7 @@ export default async function DashboardAllPostsPage({
 
   const scheduledPosts = await listScheduledPosts(user.id, {
     workspaceId: activeWorkspace.id,
+    includeLatestPublishRuns: false,
   });
 
   return (

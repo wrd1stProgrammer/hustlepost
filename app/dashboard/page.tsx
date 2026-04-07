@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import {
-  ensureProfile,
   listConnectedAccountsWithKeywords,
 } from "@/lib/db/accounts";
 import { listGeneratedHooks } from "@/lib/db/generated-hooks";
@@ -12,7 +12,6 @@ import {
   saveDraftPostsAction,
   scheduleGeneratedDraftAction,
 } from "./actions";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { BetaDraftStudio } from "@/components/beta-draft-studio";
 import {
   deriveWorkspaceKeywordsFromAccounts,
@@ -39,16 +38,11 @@ export default async function DashboardComposePage({
     workspace?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
-
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const t = getDashboardCopy(locale).pages.compose;

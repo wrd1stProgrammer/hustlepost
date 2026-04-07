@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import {
   CheckCircle2,
   Filter,
@@ -9,7 +10,6 @@ import {
   MessageCircle,
   Clock,
 } from "lucide-react";
-import { ensureProfile } from "@/lib/db/accounts";
 import { listScheduledPosts } from "@/lib/db/publishing";
 import { getWorkspaceState, getActiveWorkspace } from "@/lib/dashboard/workspaces";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
@@ -410,16 +410,13 @@ export default async function DashboardCommentsPage({
 }: {
   searchParams: Promise<CommentsSearchParams>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
+  const supabase = await createSupabaseServerClient();
 
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);

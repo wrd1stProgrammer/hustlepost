@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
-import { ensureProfile, listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
+import { getCurrentUser } from "@/lib/auth/current-user";
+import { listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
 import { listScheduledPosts } from "@/lib/db/publishing";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { getIntlLocale } from "@/lib/i18n/locales";
 import { getRequestLocale } from "@/lib/i18n/request";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { ConnectedAccountAvatar } from "@/components/connected-account-avatar";
 import { getScheduledPostReplyTexts } from "@/lib/publishing/replies";
 import { PostImageGallery } from "@/components/post-image-gallery";
@@ -35,16 +35,12 @@ export default async function DashboardDraftsPage({
     error?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const t = getDashboardCopy(locale).pages.drafts;
@@ -60,8 +56,11 @@ export default async function DashboardDraftsPage({
     redirect("/onboarding");
   }
 
-  const draftPosts = (await listScheduledPosts(user.id, { workspaceId: activeWorkspace.id }))
-    .filter((post) => post.status === "draft")
+  const draftPosts = (await listScheduledPosts(user.id, {
+    workspaceId: activeWorkspace.id,
+    statuses: ["draft"],
+    includeLatestPublishRuns: false,
+  }))
     .sort(
       (left, right) =>
         new Date(right.updated_at ?? right.created_at).getTime() -

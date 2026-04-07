@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import { Folder, Link2, Plus, Sparkles, Target } from "lucide-react";
-import { ensureProfile, listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
+import { listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { getRequestLocale } from "@/lib/i18n/request";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import {
   createWorkspaceAction,
   saveWorkspaceSettingsAction,
@@ -26,16 +26,11 @@ export default async function DashboardWorkspacesPage({
     create?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
-
-  await ensureProfile(user);
 
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
@@ -262,7 +257,7 @@ export default async function DashboardWorkspacesPage({
         </div>
         <Link
           href="/dashboard/workspaces?create=1"
-          className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#1e2330] px-5 py-2.5 text-[14px] font-bold text-white shadow-sm transition hover:bg-slate-800"
+          className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#65C984] px-5 py-2.5 text-[14px] font-bold text-[#11301F] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#58B975]"
         >
           <Plus className="h-4 w-4" strokeWidth={3} />
           {copy.createWorkspace}

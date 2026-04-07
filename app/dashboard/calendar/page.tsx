@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation";
-import { ensureProfile } from "@/lib/db/accounts";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { listScheduledPosts } from "@/lib/db/publishing";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { CalendarClient } from "./calendar-client";
 
 export default async function DashboardCalendarPage({
@@ -13,16 +12,12 @@ export default async function DashboardCalendarPage({
     lang?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const copy = getDashboardCopy(locale);

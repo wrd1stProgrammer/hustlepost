@@ -1,11 +1,10 @@
 import { redirect } from "next/navigation";
-import { ensureProfile } from "@/lib/db/accounts";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import { listGeneratedHooks } from "@/lib/db/generated-hooks";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { searchViralPosts } from "@/lib/db/viral-posts";
 import { generateHooksAction } from "../actions";
-import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { VIRAL_CATEGORIES, type ViralCategory } from "@/lib/constants/marketing";
 import { HookGenerator } from "@/components/hook-generator";
 
@@ -18,16 +17,12 @@ export default async function DashboardStudioPage({
     lang?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   

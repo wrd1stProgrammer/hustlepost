@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import { CheckCircle2, CreditCard, ReceiptText } from "lucide-react";
-import { ensureProfile, listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
+import { listConnectedAccountsWithKeywords } from "@/lib/db/accounts";
 import { listScheduledPosts } from "@/lib/db/publishing";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import { getRequestLocale } from "@/lib/i18n/request";
@@ -151,17 +152,13 @@ export default async function DashboardSettingsPage({
     settings_error?: string;
   }>;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect("/login");
   }
 
-  await ensureProfile(user);
-
+  const supabase = await createSupabaseServerClient();
   const params = await searchParams;
   const locale = await getRequestLocale(params.lang);
   const copy = getDashboardCopy(locale).pages.settings;
