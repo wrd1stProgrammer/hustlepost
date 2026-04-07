@@ -20,7 +20,7 @@ import {
   getWorkspaceState,
 } from "@/lib/dashboard/workspaces";
 
-export const maxDuration = 800;
+export const maxDuration = 300;
 
 export default async function DashboardLayout({
   children,
