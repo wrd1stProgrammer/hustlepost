@@ -262,6 +262,43 @@ async function findWorkspaceRowByName(input: {
   return data;
 }
 
+async function getWorkspaceRowById(input: {
+  userId: string;
+  workspaceId: string;
+}) {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("workspaces")
+    .select(
+      `
+      id,
+      name,
+      target_audience,
+      product_link,
+      common_instruction,
+      informational_focus,
+      engagement_focus,
+      product_focus,
+      is_active,
+      created_at,
+      updated_at,
+      workspace_keywords (
+        keyword,
+        position
+      )
+    `,
+    )
+    .eq("user_id", input.userId)
+    .eq("id", input.workspaceId)
+    .maybeSingle<WorkspaceRow>();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
 function isWorkspaceNameConflictError(error: PostgrestLikeError | null) {
   return (
     error?.code === "23505" &&
@@ -426,15 +463,16 @@ export async function createWorkspaceRecord(input: {
   }
 
   await replaceWorkspaceKeywords(data.id, input.keywords);
+  const createdWorkspaceRow = await getWorkspaceRowById({
+    userId: input.userId,
+    workspaceId: data.id,
+  });
 
-  const nextState = await getWorkspaceState({ userId: input.userId });
-  const createdWorkspace = nextState.workspaces.find((workspace) => workspace.id === data.id);
-
-  if (!createdWorkspace) {
+  if (!createdWorkspaceRow) {
     throw new Error("Failed to load created workspace");
   }
 
-  return createdWorkspace;
+  return mapWorkspaceRow(createdWorkspaceRow);
 }
 
 export async function updateWorkspaceRecord(input: {

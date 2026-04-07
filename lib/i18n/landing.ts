@@ -66,26 +66,40 @@ const LANDING_COPY: Record<Locale, LandingDictionary> = {
     },
     pricing: {
       title: "Simple Pricing",
+      description: "Choose the best plan for your posting workflow.",
       monthly: "/mo",
       starter: {
         name: "Starter",
         price: "$9",
-        features: ["100 AI Posts", "1 Account"],
+        features: ["100 AI posts", "1 account", "Smart Queue"],
       },
       pro: {
         name: "Pro",
-        price: "$39",
+        price: "$29",
         highlight: "Most Popular",
-        features: ["500 AI Posts", "3 Accounts", "Smart Queue"],
+        features: [
+          "500 AI posts",
+          "Up to 3 accounts",
+          "Detailed post performance analytics",
+          "Up to 5 workspaces",
+        ],
       },
       agency: {
         name: "Agency",
         price: "$59",
-        features: ["2000 AI Posts", "10 Accounts", "Unlimited Workspaces"],
+        features: [
+          "AI-powered posting at scale",
+          "Up to 20 accounts",
+          "Detailed post performance analytics",
+          "Unlimited workspaces",
+          "Early access to upcoming features",
+        ],
       },
     },
     cta: {
       title: "Ready to go viral?",
+      description:
+        "Save hours every week with faster drafting, smarter scheduling, and cleaner publishing operations.",
       primaryCta: "Start your free trial",
     },
     footer: {
@@ -103,12 +117,12 @@ const LANDING_COPY: Record<Locale, LandingDictionary> = {
       features: "기능",
       pricing: "요금제",
       login: "로그인",
-      startFree: "Start for free",
+      startFree: "무료로 시작하기",
       dashboard: "대시보드",
     },
     locale: {
-      label: "Language",
-      english: "English",
+      label: "언어",
+      english: "영어",
       korean: "한국어",
     },
     hero: {
@@ -157,33 +171,47 @@ const LANDING_COPY: Record<Locale, LandingDictionary> = {
       output3: "제품 유도 타입",
     },
     pricing: {
-      title: "Pricing",
-      monthly: "/mo",
+      title: "요금제",
+      description: "운영 규모에 맞는 플랜을 선택해 안정적으로 자동 발행을 시작하세요.",
+      monthly: "/월",
       starter: {
         name: "Starter",
         price: "$9",
-        features: ["100 AI Posts", "1 Account"],
+        features: ["AI 포스트 100개", "계정 1개", "스마트 큐"],
       },
       pro: {
         name: "Pro",
-        price: "$39",
+        price: "$29",
         highlight: "인기",
-        features: ["500 AI Posts", "3 Accounts", "Smart Queue"],
+        features: [
+          "AI 포스트 500개",
+          "계정 최대 3개",
+          "포스팅 정밀 성과 분석",
+          "워크스페이스 최대 5개",
+        ],
       },
       agency: {
         name: "Agency",
         price: "$59",
-        features: ["2000 AI Posts", "10 Accounts", "Unlimited Workspaces"],
+        features: [
+          "대규모 AI 포스팅 운영",
+          "계정 최대 20개",
+          "포스팅 정밀 성과 분석",
+          "워크스페이스 무제한",
+          "신기능 우선 체험 제공",
+        ],
       },
     },
     cta: {
       title: "터지는 포스트, 지금 바로 시작하세요.",
+      description:
+        "초안 작성부터 스케줄링, 발행 운영까지 한 번에 묶어 매주 반복 작업 시간을 크게 줄이세요.",
       primaryCta: "Start your free trial",
     },
     footer: {
       termsOfServices: "이용약관",
       privacyPolicy: "개인정보 처리방침",
-      copyright: "© HustlePost. All rights reserved.",
+      copyright: "© HustlePost. 모든 권리 보유.",
     },
   },
 };

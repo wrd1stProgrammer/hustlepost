@@ -74,6 +74,7 @@ export type LandingDictionary = {
   };
   pricing: {
     title: string;
+    description: string;
     monthly: string;
     starter: {
       name: string;
@@ -94,6 +95,7 @@ export type LandingDictionary = {
   };
   cta: {
     title: string;
+    description: string;
     primaryCta: string;
   };
   footer: {
@@ -508,7 +510,7 @@ export function LandingShell({
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tighter text-slate-900 mb-4">{dictionary.pricing.title}</h2>
-          <p className="text-lg text-slate-500 font-medium">Choose the perfect plan for your content workflow.</p>
+          <p className="text-lg text-slate-500 font-medium">{dictionary.pricing.description}</p>
         </motion.div>
         
         <motion.div 
@@ -598,7 +600,7 @@ export function LandingShell({
            {dictionary.cta.title}
          </h2>
          <p className="text-xl text-slate-500 font-medium mb-12 px-4">
-           Join the thousands of users saving hours per week formatting and scheduling their thoughts.
+           {dictionary.cta.description}
          </p>
          <Link
            href={primaryCtaHref}

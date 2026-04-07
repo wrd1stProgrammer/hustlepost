@@ -6,9 +6,20 @@ import {
   getWorkspaceState,
 } from "@/lib/dashboard/workspaces";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
-import { RoleSelectionForm, PricingDummyStep } from "./components";
+import {
+  RoleSelectionForm,
+  PricingDummyStep,
+  WorkspaceCreateSubmitButton,
+} from "./components";
 
-export default async function OnboardingPage() {
+export default async function OnboardingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    error?: string;
+  }>;
+}) {
+  const params = await searchParams;
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
@@ -75,6 +86,11 @@ export default async function OnboardingPage() {
           </div>
 
           <section className="rounded-[32px] border border-slate-200 bg-white p-7 sm:p-10 shadow-sm relative">
+            {params.error === "workspace_create_failed" ? (
+              <div className="mb-6 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+                Workspace creation failed. Please retry once.
+              </div>
+            ) : null}
             <form action={createWorkspaceAction} className="space-y-7">
               <input type="hidden" name="redirectTo" value="/onboarding" />
 
@@ -168,12 +184,7 @@ export default async function OnboardingPage() {
               </div>
 
               <div className="flex justify-end pt-4">
-                <button
-                  type="submit"
-                  className="rounded-full bg-[#11301F] px-8 py-3.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:shadow-md"
-                >
-                  Create Workspace
-                </button>
+                <WorkspaceCreateSubmitButton />
               </div>
             </form>
           </section>
@@ -195,11 +206,11 @@ export default async function OnboardingPage() {
           </h1>
           <p className="text-base text-slate-600 mb-10 max-w-md mx-auto">
             To automatically publish posts from your workspace, link at least one Threads destination now. 
-            You'll automatically return here right after successfully providing authorization.
+            You&apos;ll automatically return here right after successfully providing authorization.
           </p>
           <a
             href="/api/oauth/threads?redirectTo=/onboarding"
-            className="inline-flex items-center justify-center rounded-full bg-[#11301F] px-8 py-4 text-base font-bold text-white transition-all hover:bg-black hover:-translate-y-0.5 shadow-[0_8px_20px_-6px_rgba(17,48,31,0.5)]"
+            className="inline-flex cursor-pointer items-center justify-center rounded-full border border-[#1e7f52] bg-[#20c997] px-10 py-4 text-base font-bold text-[#0b1d14] transition-all hover:-translate-y-0.5 hover:bg-[#19b986] hover:shadow-[0_10px_24px_-8px_rgba(32,201,151,0.55)]"
           >
             Connect Threads
           </a>

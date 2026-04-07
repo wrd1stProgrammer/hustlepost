@@ -428,26 +428,35 @@ export async function createWorkspaceAction(formData: FormData) {
     redirect("/login");
   }
 
-  const createdWorkspace = await createWorkspaceRecord({
-    userId: user.id,
-    name: workspaceName,
-    keywords: [
-      getFormValue(formData, "keyword1"),
-      getFormValue(formData, "keyword2"),
-      getFormValue(formData, "keyword3"),
-    ],
-    customization: buildWorkspaceCustomizationFromForm(formData),
-    isActive: true,
-  });
-  revalidatePath("/dashboard", "layout");
-  revalidatePath("/dashboard/workspaces");
-  revalidatePath("/dashboard/posts");
-  redirect(
-    buildRedirectPath(redirectTo, {
-      workspace_created: 1,
-      workspace: createdWorkspace.id,
-    }),
-  );
+  try {
+    const createdWorkspace = await createWorkspaceRecord({
+      userId: user.id,
+      name: workspaceName,
+      keywords: [
+        getFormValue(formData, "keyword1"),
+        getFormValue(formData, "keyword2"),
+        getFormValue(formData, "keyword3"),
+      ],
+      customization: buildWorkspaceCustomizationFromForm(formData),
+      isActive: true,
+    });
+    revalidatePath("/dashboard", "layout");
+    revalidatePath("/dashboard/workspaces");
+    revalidatePath("/dashboard/posts");
+    redirect(
+      buildRedirectPath(redirectTo, {
+        workspace_created: 1,
+        workspace: createdWorkspace.id,
+      }),
+    );
+  } catch (error) {
+    unstable_rethrow(error);
+    console.error("[createWorkspaceAction] failed", {
+      userId: user.id,
+      message: error instanceof Error ? error.message : String(error),
+    });
+    redirect(buildRedirectPath(redirectTo, { error: "workspace_create_failed" }));
+  }
 }
 
 export async function saveWorkspaceSettingsAction(formData: FormData) {

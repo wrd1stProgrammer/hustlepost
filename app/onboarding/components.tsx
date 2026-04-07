@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useFormStatus } from "react-dom";
 import { Check } from "lucide-react";
 import { saveRoleAction, completeOnboardingAction } from "./actions";
 
@@ -121,5 +122,27 @@ export function PricingDummyStep() {
         ))}
       </div>
     </div>
+  );
+}
+
+export function WorkspaceCreateSubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[#11301F] px-8 py-3.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+      aria-busy={pending}
+    >
+      {pending ? (
+        <span className="flex items-center gap-2">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/90 border-t-transparent" />
+          Creating...
+        </span>
+      ) : (
+        "Create Workspace"
+      )}
+    </button>
   );
 }
