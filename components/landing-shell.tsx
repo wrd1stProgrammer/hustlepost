@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Sparkles, CheckCircle2, ChevronDown, Wand2, Calendar, MessageSquare, LayoutTemplate, BriefcaseIcon, AtSign, Clock, FileText, User } from "lucide-react";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { motion, Variants } from "framer-motion";
 import threadIcon from "@/app/assets/icon/thread.png";
+import appIcon from "@/app/assets/icon/icon-192.png";
 
 export type LandingLocale = "en" | "ko";
 
@@ -137,7 +139,14 @@ export function LandingShell({
       {/* Navigation */}
       <header className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/50">
         <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6">
-          <div className="flex items-center gap-2 border border-slate-200 rounded-xl px-2.5 py-1.5 bg-white shadow-sm">
+          <div className="flex items-center gap-2">
+            <Image
+              src={appIcon}
+              alt="Hustle Post"
+              width={24}
+              height={24}
+              className="rounded-md object-cover"
+            />
             <span className="text-[15px] font-extrabold tracking-tight text-slate-900">
               {dictionary.brand.label}
             </span>
@@ -349,9 +358,14 @@ export function LandingShell({
                   transition={{ duration: 0.4, delay: 0.5 }}
                 >
                   <circle cx="230" cy="180" r="36" fill="white" stroke="#E5E7EB" strokeWidth="1.5" />
-                  <g transform="translate(212, 162)">
-                    <Sparkles className="text-slate-700" width={36} height={36} strokeWidth={1.5} />
-                  </g>
+                  <image
+                    x={211}
+                    y={161}
+                    width={38}
+                    height={38}
+                    href={appIcon.src}
+                    preserveAspectRatio="xMidYMid slice"
+                  />
                 </motion.g>
 
                 {/* Output nodes (right side) */}

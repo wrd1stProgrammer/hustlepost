@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useState, type ComponentType } from "react";
 import {
@@ -16,7 +17,6 @@ import {
   ChevronDown,
   ChevronUp,
   LogOut,
-  Command,
   Home,
   Plus,
   Settings,
@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import type { WorkspaceRecord } from "@/lib/dashboard/workspaces";
 import type { DashboardCopy } from "@/lib/i18n/dashboard";
+import appIcon from "@/app/assets/icon/icon-192.png";
 
 type Locale = "en" | "ko";
 
@@ -116,7 +117,6 @@ export function DashboardSidebar({
     return (
       <Link
         href={item.href}
-        prefetch={false}
         className={`flex items-center justify-between px-3 py-2 text-sm transition-colors rounded-lg group ${
           isActive 
             ? "bg-slate-100 text-slate-900 font-medium" 
@@ -140,10 +140,15 @@ export function DashboardSidebar({
       <div className="p-4 border-b border-slate-100 shrink-0">
         <Link
           href="/"
-          prefetch={false}
           className="mb-6 flex items-center gap-2 px-2 text-slate-900 transition-opacity hover:opacity-80"
         >
-          <Command className="h-6 w-6 text-slate-900" />
+          <Image
+            src={appIcon}
+            alt="Hustle Post"
+            width={24}
+            height={24}
+            className="rounded-md object-cover"
+          />
           <span className="text-[1.1rem] font-bold tracking-tight text-slate-900">{t.brand}</span>
         </Link>
 
@@ -203,7 +208,6 @@ export function DashboardSidebar({
 
               <Link
                 href="/dashboard/workspaces"
-                prefetch={false}
                 className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                 onClick={() => setWorkspaceMenuOpen(false)}
               >
@@ -213,7 +217,6 @@ export function DashboardSidebar({
 
               <Link
                 href="/dashboard/workspaces?create=1"
-                prefetch={false}
                 className="mt-1 flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                 onClick={() => setWorkspaceMenuOpen(false)}
               >
@@ -227,7 +230,6 @@ export function DashboardSidebar({
         <div className="mt-5">
           <Link
             href="/dashboard"
-            prefetch={false}
             className="w-full flex items-center justify-center gap-2 bg-[#4ADE80] text-emerald-950 font-semibold text-sm py-2.5 rounded-lg hover:bg-[#34D399] transition-colors"
           >
             <span className="border border-emerald-950/30 rounded p-[1px] shadow-sm bg-emerald-900/5">
@@ -308,7 +310,6 @@ export function DashboardSidebar({
             <div className="space-y-1">
               <Link
                 href="/dashboard/settings?tab=settings"
-                prefetch={false}
                 onClick={() => setProfileMenuOpen(false)}
                 className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >
@@ -317,7 +318,6 @@ export function DashboardSidebar({
               </Link>
               <Link
                 href="/dashboard/settings?tab=plans"
-                prefetch={false}
                 onClick={() => setProfileMenuOpen(false)}
                 className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >
@@ -326,7 +326,6 @@ export function DashboardSidebar({
               </Link>
               <Link
                 href="/dashboard/support"
-                prefetch={false}
                 onClick={() => setProfileMenuOpen(false)}
                 className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >
@@ -335,7 +334,6 @@ export function DashboardSidebar({
               </Link>
               <Link
                 href="/dashboard/settings?tab=billing"
-                prefetch={false}
                 onClick={() => setProfileMenuOpen(false)}
                 className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
               >

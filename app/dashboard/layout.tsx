@@ -4,18 +4,13 @@ import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { getRequestLocale, buildPathWithSearch } from "@/lib/i18n/request";
 import { getDashboardCopy } from "@/lib/i18n/dashboard";
 import {
-  ensureProfile,
   listConnectedAccounts,
-  listConnectedAccountsWithKeywords,
 } from "@/lib/db/accounts";
-import { listScheduledPosts } from "@/lib/db/publishing";
-import { listGeneratedHooks } from "@/lib/db/generated-hooks";
 import {
   selectWorkspaceAction,
   signOutAction,
 } from "./actions";
 import {
-  deriveWorkspaceKeywordsFromAccounts,
   getActiveWorkspace,
   getWorkspaceState,
 } from "@/lib/dashboard/workspaces";
@@ -36,8 +31,6 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
-  await ensureProfile(user);
-
   const { data: profile } = await supabase
     .from("profiles")
     .select("display_name, plan")
@@ -46,15 +39,9 @@ export default async function DashboardLayout({
   
   const locale = await getRequestLocale();
   const accounts = await listConnectedAccounts(user.id);
-  const accountsWithKeywords = await listConnectedAccountsWithKeywords(user.id);
-  const threadAccounts = accountsWithKeywords.filter(
-    (account) => account.platform === "threads",
-  );
-  const scheduledPosts = await listScheduledPosts(user.id);
-  const recentGeneratedHooks = await listGeneratedHooks(user.id);
   const workspaceState = await getWorkspaceState({
     userId: user.id,
-    fallbackKeywords: deriveWorkspaceKeywordsFromAccounts(threadAccounts),
+    fallbackKeywords: [],
   });
   const activeWorkspace = getActiveWorkspace(workspaceState);
 
@@ -63,10 +50,33 @@ export default async function DashboardLayout({
   }
 
   const activeConnectionCount = accounts.filter(a => a.account_status === "active").length;
-  const queuedPosts = scheduledPosts.filter(p => p.status === "scheduled" || p.status === "processing").length;
-  const draftPostsCount = scheduledPosts.filter(
-    (post) => post.status === "draft" && post.workspace_id === activeWorkspace.id,
-  ).length;
+  const [
+    queuedPostsResult,
+    draftPostsResult,
+  ] = await Promise.all([
+    supabase
+      .from("scheduled_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .in("status", ["scheduled", "processing"]),
+    supabase
+      .from("scheduled_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .eq("status", "draft")
+      .eq("workspace_id", activeWorkspace.id),
+  ]);
+
+  if (queuedPostsResult.error) {
+    throw queuedPostsResult.error;
+  }
+
+  if (draftPostsResult.error) {
+    throw draftPostsResult.error;
+  }
+
+  const queuedPosts = queuedPostsResult.count ?? 0;
+  const draftPostsCount = draftPostsResult.count ?? 0;
 
   const copy = getDashboardCopy(locale);
 

@@ -34,9 +34,11 @@ export async function ensureProfile(user: User) {
       id: user.id,
       email: user.email,
       display_name: displayName,
-      updated_at: new Date().toISOString(),
     },
-    { onConflict: "id" },
+    {
+      onConflict: "id",
+      ignoreDuplicates: true,
+    },
   );
 
   if (error) {
