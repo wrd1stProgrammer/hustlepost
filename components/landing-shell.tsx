@@ -179,70 +179,45 @@ export function LandingShell({
         </div>
       </header>
 
-      {/* Hero Section - Asymmetric Left Aligned */}
+      {/* Hero Section - Centered Typography & Effects */}
       <motion.section 
         initial="hidden" 
         animate="visible" 
         variants={staggerContainer}
-        className="relative px-6 pt-40 pb-20 max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center"
+        className="relative px-6 pt-40 pb-32 max-w-[1280px] mx-auto flex flex-col items-center text-center z-10"
       >
-        {/* Left: Text & CTA */}
-        <div className="max-w-2xl text-left z-10">
-          <motion.h1 variants={fadeUp} className="text-5xl font-extrabold tracking-tighter text-slate-900 sm:text-6xl lg:text-[5rem] leading-[1.0] lg:leading-[0.95]">
+        {/* Subtle Background Glow */}
+        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-br from-[#65C984]/20 via-[#8A5CF5]/10 to-transparent blur-[100px] -z-10 rounded-full pointer-events-none" />
+        
+        <div className="max-w-[860px] z-10 flex flex-col items-center">
+          <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200/50 bg-white/50 px-4 py-1.5 backdrop-blur-sm shadow-sm transition-transform hover:scale-105 hover:bg-white/80 cursor-default">
+            <Sparkles className="h-4 w-4 text-[#65C984]" />
+            <span className="text-[13px] font-bold text-slate-700 tracking-wide uppercase">AI-Powered Publishing</span>
+          </motion.div>
+          
+          <motion.h1 variants={fadeUp} className="text-[3.5rem] sm:text-6xl lg:text-[5.5rem] font-extrabold tracking-tighter text-slate-900 leading-[1.05] lg:leading-[1.0]">
             {dictionary.hero.title}
           </motion.h1>
           
-          <motion.p variants={fadeUp} className="mt-8 text-lg sm:text-xl leading-relaxed text-slate-500 font-medium max-w-[55ch]">
+          <motion.p variants={fadeUp} className="mt-8 text-lg sm:text-[22px] leading-[1.6] text-slate-500 font-medium max-w-[600px]">
             {dictionary.hero.description}
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-12 flex flex-col sm:flex-row items-center justify-start gap-5">
+          <motion.div variants={fadeUp} className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5 w-full sm:w-auto">
             <Link
               href={primaryCtaHref}
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-[#65C984] px-9 py-4 text-base font-bold text-[#11301F] shadow-[0_8px_20px_-6px_rgba(101,201,132,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_25px_-8px_rgba(101,201,132,0.5)] hover:bg-[#58B975] active:scale-[0.98] active:-translate-y-0"
+              className="group relative inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-[#65C984] px-10 py-4 text-[17px] font-bold text-[#11301F] shadow-[0_8px_20px_-6px_rgba(101,201,132,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_30px_-8px_rgba(101,201,132,0.5)] hover:bg-[#58B975] overflow-hidden"
             >
-              {signedIn ? dictionary.hero.signedInPrimaryCta : dictionary.hero.primaryCta}
-              <ArrowRight className="h-4 w-4" />
+              <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-150%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(150%)]">
+                <div className="relative h-full w-8 bg-white/30" />
+              </div>
+              <span className="relative z-10 flex items-center gap-2">
+                {signedIn ? dictionary.hero.signedInPrimaryCta : dictionary.hero.primaryCta}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
             </Link>
           </motion.div>
         </div>
-
-        {/* Right: Minimalist Dummy Post */}
-        <motion.div variants={fadeUp} className="hidden lg:flex relative right-0 justify-end items-center h-full min-h-[500px]">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[120%] bg-gradient-to-br from-emerald-500/5 to-blue-500/5 blur-3xl -z-10 rounded-full" />
-          <div className="relative w-full max-w-[420px] aspect-[4/5] rounded-[2.5rem] bg-white border border-slate-200/80 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.03)] flex flex-col p-8 sm:p-10 overflow-hidden transform rotate-2 hover:rotate-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-             
-             {/* Header */}
-             <div className="flex items-center gap-4 mb-10 w-full">
-               <div className="w-12 h-12 rounded-[1.25rem] bg-slate-50 flex items-center justify-center border border-slate-200/60 shadow-sm shrink-0">
-                 <img src={threadIcon.src} alt="Thread icon" className="w-5 h-5 opacity-70" />
-               </div>
-               <div className="flex flex-col gap-2">
-                  <div className="h-3.5 w-24 bg-slate-200 rounded-full" />
-                  <div className="h-2.5 w-16 bg-slate-100 rounded-full" />
-               </div>
-               <div className="ml-auto px-3.5 py-1.5 bg-emerald-50 rounded-full text-[10px] font-bold tracking-widest text-emerald-600 uppercase border border-emerald-100/50 shadow-sm">
-                 Generating
-               </div>
-             </div>
-             
-             {/* Body lines */}
-             <div className="flex-1 flex flex-col gap-5 w-full">
-               <div className="h-3 w-full bg-slate-100 rounded-full" />
-               <div className="h-3 w-[85%] bg-slate-100 rounded-full" />
-               <div className="h-3 w-[95%] bg-slate-100 rounded-full" />
-               <div className="h-3 w-[60%] bg-slate-100 rounded-full mb-4" />
-               
-               {/* Media box */}
-               <div className="w-full h-40 bg-slate-50 border border-slate-100/80 rounded-2xl flex items-center justify-center mt-auto shadow-inner relative overflow-hidden">
-                 <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(248,250,252,0.5)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] opacity-40"></div>
-                 <div className="w-12 h-12 rounded-full border-2 border-dashed border-slate-200 flex items-center justify-center bg-white z-10 shadow-sm">
-                    <Sparkles className="w-5 h-5 text-slate-300" />
-                 </div>
-               </div>
-             </div>
-          </div>
-        </motion.div>
       </motion.section>
 
       {/* How It Works - Left Text + Right Diagram */}
