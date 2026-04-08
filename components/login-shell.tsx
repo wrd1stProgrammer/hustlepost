@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/i18n/locales";
 import type { LoginCopy } from "@/lib/i18n/login";
 import Image from "next/image";
 import appIcon from "@/app/assets/icon/icon-192.png";
+import googleIcon from "@/app/assets/icon/google30003000.png";
 import Link from "next/link";
 import { useFormStatus } from "react-dom";
 import { Loader2 } from "lucide-react";
@@ -19,16 +20,7 @@ type LoginShellProps = {
   mode?: "login" | "signup";
 };
 
-function GoogleGlyph() {
-  return (
-    <span
-      aria-hidden="true"
-      className="flex h-6 w-6 items-center justify-center rounded bg-slate-100 text-xs font-bold text-slate-900"
-    >
-      G
-    </span>
-  );
-}
+
 
 function GoogleSubmitButton({ copy }: { copy: any }) {
   const { pending } = useFormStatus();
@@ -38,8 +30,8 @@ function GoogleSubmitButton({ copy }: { copy: any }) {
       disabled={pending}
       className="group flex w-full items-center justify-center gap-3 rounded-[18px] border border-slate-200 bg-white px-4 py-3.5 text-[15px] font-bold text-slate-700 transition-all hover:border-[#65C984] hover:bg-slate-50 hover:text-slate-900 shadow-sm cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
     >
-      {pending ? <Loader2 className="h-5 w-5 animate-spin text-slate-400" /> : <GoogleGlyph />}
-      <span>{pending ? "Connecting..." : copy.googleButton}</span>
+      {pending ? <Loader2 className="h-5 w-5 animate-spin text-slate-400" /> : <Image src={googleIcon} alt="Google" width={22} height={22} className="object-contain" />}
+      <span>{pending ? "Connecting..." : "Continue with Google"}</span>
     </button>
   );
 }
@@ -95,9 +87,13 @@ export function LoginShell({
              <h1 className="text-[2rem] font-extrabold tracking-tighter text-slate-900 text-center mb-2">
                {isLogin ? copy.title : "Create an account"}
              </h1>
-             <p className="text-[14px] font-medium text-slate-500 text-center mb-8">
-               {isLogin ? copy.helperText : "Join the workspace to manage your drafts."}
-             </p>
+             {!isLogin ? (
+               <p className="text-[14px] font-medium text-slate-500 text-center mb-8">
+                 Join the workspace to manage your drafts.
+               </p>
+             ) : (
+               <div className="h-6" />
+             )}
 
             {errorMessage ? (
               <div className="mb-8 rounded-[14px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700 text-center">
