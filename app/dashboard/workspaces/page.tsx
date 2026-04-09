@@ -62,7 +62,7 @@ export default async function DashboardWorkspacesPage({
     const isExistingWorkspace = Boolean(workspace);
 
     return (
-      <div className="mx-auto min-h-full max-w-4xl px-8 py-8 lg:px-10">
+      <div className="mx-auto min-h-full max-w-4xl px-4 py-5 sm:px-8 sm:py-8 lg:px-10">
         <Link
           href="/dashboard/workspaces"
           className="mb-6 inline-flex items-center gap-2 text-[14px] font-semibold text-slate-500 transition hover:text-slate-800"
@@ -76,10 +76,10 @@ export default async function DashboardWorkspacesPage({
           </div>
         ) : null}
 
-        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-6 flex flex-col gap-4 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+              <h1 className="text-[1.75rem] font-bold tracking-tight text-slate-900 sm:text-3xl">
                 {workspace?.name ?? copy.createEditorTitle}
               </h1>
               {workspace?.id === workspaceState.activeWorkspaceId ? (
@@ -102,7 +102,7 @@ export default async function DashboardWorkspacesPage({
               />
               <button
                 type="submit"
-                className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-[13px] font-bold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-[13px] font-bold text-slate-700 shadow-sm transition hover:bg-slate-50 sm:w-auto"
               >
                 {copy.setCurrent}
               </button>
@@ -235,10 +235,10 @@ export default async function DashboardWorkspacesPage({
             </div>
           </div>
 
-          <div className="mt-4 flex justify-end px-2 pb-12">
+          <div className="mt-4 flex px-2 pb-12 sm:justify-end">
             <button
               type="submit"
-              className="rounded-xl bg-[#20c997] px-6 py-3.5 text-[14px] font-bold text-white shadow-sm transition hover:bg-emerald-400"
+              className="w-full rounded-xl bg-[#20c997] px-6 py-3.5 text-[14px] font-bold text-white shadow-sm transition hover:bg-emerald-400 sm:w-auto"
             >
               {workspace ? copy.save : copy.createAndSave}
             </button>
@@ -249,15 +249,15 @@ export default async function DashboardWorkspacesPage({
   }
 
   return (
-    <div className="mx-auto min-h-full max-w-[1600px] px-8 py-8 lg:px-10">
-      <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+    <div className="mx-auto min-h-full max-w-[1600px] px-4 py-5 sm:px-8 sm:py-8 lg:px-10">
+      <div className="mb-6 flex flex-col gap-5 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900">{copy.title}</h1>
+          <h1 className="text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-3xl">{copy.title}</h1>
           <p className="mt-2 text-[15px] font-medium text-slate-500">{copy.description}</p>
         </div>
         <Link
           href="/dashboard/workspaces?create=1"
-          className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#65C984] px-5 py-2.5 text-[14px] font-bold text-[#11301F] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#58B975]"
+          className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#65C984] px-5 py-2.5 text-[14px] font-bold text-[#11301F] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#58B975] sm:w-auto"
         >
           <Plus className="h-4 w-4" strokeWidth={3} />
           {copy.createWorkspace}
@@ -270,7 +270,7 @@ export default async function DashboardWorkspacesPage({
         </div>
       ) : null}
 
-      <div className="grid grid-cols-1 gap-6 pb-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 pb-12 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {workspaceState.workspaces.map((workspace) => {
           const isCurrent = workspace.id === workspaceState.activeWorkspaceId;
           return (

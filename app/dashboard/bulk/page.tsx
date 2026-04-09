@@ -29,16 +29,16 @@ export default async function DashboardBulkToolsPage({
   const hooks = await listGeneratedHooks(user.id);
 
   return (
-    <div className="p-8 lg:p-12 max-w-[1600px] mx-auto min-h-full">
+    <div className="mx-auto min-h-full max-w-[1600px] px-4 py-5 sm:p-8 lg:p-12">
       <div className="flex flex-col mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-900 flex items-center gap-3">
+        <h1 className="flex items-center gap-3 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-3xl">
           <Layers3 className="h-8 w-8 text-slate-900" />
            {t.title}
         </h1>
         <p className="mt-2 text-slate-500 max-w-2xl">{t.subtitle}</p>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-8 items-start">
+      <div className="flex flex-col items-start gap-6 sm:gap-8 xl:flex-row">
         {/* Left: Drafts List */}
         <div className="flex-1 w-full max-w-[900px]">
            <div className="flex items-center justify-between mb-4 px-1">
@@ -79,7 +79,7 @@ export default async function DashboardBulkToolsPage({
         </div>
 
         {/* Right: Schedule Configuration Panel */}
-        <div className="w-full xl:w-[400px] shrink-0 sticky top-4">
+        <div className="w-full shrink-0 xl:w-[400px] xl:sticky xl:top-4">
            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
              <div className="flex items-center gap-2 mb-6">
                 <Settings2 className="h-5 w-5 text-slate-700" />

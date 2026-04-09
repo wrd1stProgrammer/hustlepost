@@ -8,6 +8,7 @@ import googleIcon from "@/app/assets/icon/google30003000.png";
 import Link from "next/link";
 import { useFormStatus } from "react-dom";
 import { Loader2 } from "lucide-react";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 type LoginShellProps = {
   copy: LoginCopy;
@@ -63,10 +64,10 @@ export function LoginShell({
   const isLogin = mode === "login";
 
   return (
-    <main className="min-h-screen bg-[#fafafa] text-slate-900 font-sans selection:bg-[#65C984] selection:text-white flex flex-col relative">
+    <main className="relative flex min-h-dvh flex-col bg-[#fafafa] text-slate-900 font-sans selection:bg-[#65C984] selection:text-white">
       {/* Top Header */}
-      <header className="absolute top-0 inset-x-0 p-6 flex justify-between items-center w-full z-10">
-        <Link href="/" className="flex items-center gap-2 px-3 py-1.5 transition-colors cursor-pointer group">
+      <header className="absolute inset-x-0 top-0 z-10 flex w-full items-center justify-between p-4 sm:p-6">
+        <Link href="/" className="flex items-center gap-2 px-1 py-1.5 transition-colors cursor-pointer group sm:px-3">
           <Image
              src={appIcon}
              alt="Hustle Post"
@@ -74,40 +75,41 @@ export function LoginShell({
              height={32}
              className="rounded-md object-cover transition-transform group-hover:scale-105"
           />
-          <span className="text-[17px] font-extrabold tracking-tight text-slate-900">
+          <span className="text-[15px] font-extrabold tracking-tight text-slate-900 sm:text-[17px]">
             {copy.brand}
           </span>
         </Link>
+        <LanguageSwitcher currentLocale={locale} redirectTo={localeRedirectTo} />
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex items-center justify-center p-6 py-24 relative">
+      <div className="relative flex flex-1 items-start justify-center p-4 pt-24 pb-8 sm:items-center sm:p-6 sm:py-24">
         <div className="w-full max-w-[420px]">
-          <section className="flex flex-col relative z-20 bg-white p-8 sm:p-10 border border-slate-200/60 rounded-[32px] shadow-[0_30px_60px_-15px_rgba(15,23,42,0.05)]">
-             <h1 className="text-[2rem] font-extrabold tracking-tighter text-slate-900 text-center mb-2">
+          <section className="relative z-20 flex flex-col rounded-[26px] border border-slate-200/60 bg-white p-5 shadow-[0_30px_60px_-15px_rgba(15,23,42,0.05)] sm:rounded-[32px] sm:p-10">
+             <h1 className="mb-2 text-center text-[1.75rem] font-extrabold tracking-tighter text-slate-900 sm:text-[2rem]">
                {isLogin ? copy.title : "Create an account"}
              </h1>
              {!isLogin ? (
-               <p className="text-[14px] font-medium text-slate-500 text-center mb-8">
+               <p className="mb-7 text-center text-[14px] font-medium text-slate-500 sm:mb-8">
                  Join the workspace to manage your drafts.
                </p>
              ) : (
-               <div className="h-6" />
+               <div className="h-5 sm:h-6" />
              )}
 
             {errorMessage ? (
-              <div className="mb-8 rounded-[14px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700 text-center">
+              <div className="mb-6 rounded-[14px] border border-rose-200 bg-rose-50 px-4 py-3 text-center text-sm font-medium text-rose-700 sm:mb-8">
                 {errorMessage}
               </div>
             ) : null}
 
-            <form action={signInWithGoogleAction} className="mb-8">
+            <form action={signInWithGoogleAction} className="mb-6 sm:mb-8">
               <input type="hidden" name="lang" value={locale} />
               <input type="hidden" name="next" value="/dashboard" />
               <GoogleSubmitButton copy={copy} />
             </form>
 
-            <div className="mb-8 flex items-center gap-4">
+            <div className="mb-6 flex items-center gap-4 sm:mb-8">
               <div className="h-px flex-1 bg-slate-100" />
               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 {copy.dividerLabel}
@@ -115,7 +117,7 @@ export function LoginShell({
               <div className="h-px flex-1 bg-slate-100" />
             </div>
 
-            <form action={isLogin ? signInAction : signUpAction} className="flex flex-col gap-5">
+            <form action={isLogin ? signInAction : signUpAction} className="flex flex-col gap-4 sm:gap-5">
               <input type="hidden" name="lang" value={locale} />
 
               <label className="block relative">
@@ -152,7 +154,7 @@ export function LoginShell({
                 <div className="text-center mt-3 text-[14px] font-medium text-slate-500">
                   {isLogin ? (
                     <>
-                      Don't have an account?{" "}
+                      Don&apos;t have an account?{" "}
                       <Link href="/signup" className="text-slate-900 font-bold hover:underline cursor-pointer">
                         Sign up
                       </Link>

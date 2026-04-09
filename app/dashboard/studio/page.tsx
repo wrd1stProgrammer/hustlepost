@@ -44,7 +44,7 @@ export default async function DashboardStudioPage({
   const dashboardCopy = getDashboardCopy(locale);
 
   return (
-    <div className="p-8 lg:p-12 max-w-[1600px] mx-auto min-h-full">
+    <div className="mx-auto min-h-full max-w-[1600px] px-4 py-5 sm:p-8 lg:p-12">
       <HookGenerator
         copy={dashboardCopy.hook}
         topViralPosts={topViralPosts}

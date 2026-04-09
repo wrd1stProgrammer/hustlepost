@@ -314,7 +314,7 @@ function CommentThread({
     group.canReply && !isOwned;
 
   return (
-    <div className={depth > 0 ? "ml-6 mt-3 border-l-2 border-slate-100 pl-4" : ""}>
+    <div className={depth > 0 ? "ml-3 mt-3 border-l-2 border-slate-100 pl-3 sm:ml-6 sm:pl-4" : ""}>
       <div className={`rounded-2xl p-4 ${isOwned ? "bg-emerald-50 border border-emerald-200" : "bg-slate-50"}`}>
         {/* Author row */}
         <div className="flex items-center justify-between gap-3">
@@ -332,7 +332,7 @@ function CommentThread({
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
             {comment.timestamp && (
               <span className="text-[11px] text-slate-400">
                 {getFormattableDate(comment.timestamp, locale)}
@@ -394,7 +394,7 @@ function CommentThread({
             buttonLabel={labels.replyButton}
           />
         ) : !group.canReply && !isOwned ? (
-          <div className="mt-3 ml-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-[12px] leading-5 text-amber-700">
+          <div className="mt-3 ml-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-[12px] leading-5 text-amber-700 sm:ml-6">
             {labels.replyScopeRequired}
           </div>
         ) : null
@@ -632,11 +632,11 @@ export default async function DashboardCommentsPage({
         : null;
 
   return (
-    <div className="mx-auto min-h-full max-w-[1400px] px-6 py-8 lg:px-8">
+    <div className="mx-auto min-h-full max-w-[1400px] px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
       <DashboardToast toast={toast} clearKeys={["replied", "repliedCommentId", "error"]} />
 
       {/* ─── Header ─── */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-start justify-between gap-4 sm:items-center">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             {t.title}
@@ -718,7 +718,7 @@ export default async function DashboardCommentsPage({
       </form>
 
       {/* ─── Stats bar ─── */}
-      <div className="mt-6 flex items-center justify-between gap-4">
+      <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <p className="text-sm text-slate-500">
           {formatTemplate(t.visibleCommentsTemplate, {
             comments: visibleCommentCount,
@@ -743,14 +743,14 @@ export default async function DashboardCommentsPage({
           <p className="mt-3 text-sm text-slate-500">{t.noCommentsMatching}</p>
         </div>
       ) : (
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
           {filteredGroups.map((group) => (
             <article
               key={group.postId}
-              className="rounded-2xl border border-slate-200 bg-white overflow-hidden flex flex-col h-[720px]"
+              className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white lg:h-[720px]"
             >
               {/* ── Post header: original post prominently shown ── */}
-              <div className="draft-scroll-area shrink-0 max-h-[280px] overflow-y-auto p-5 border-b border-slate-100">
+              <div className="draft-scroll-area shrink-0 border-b border-slate-100 p-4 sm:p-5 lg:max-h-[280px] lg:overflow-y-auto">
                 <div className="flex items-start gap-3">
                   <ConnectedAccountAvatar
                     account={group.connectedAccount}
@@ -758,7 +758,7 @@ export default async function DashboardCommentsPage({
                     initialsClassName="text-[11px]"
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-3">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                       <p className="text-sm font-semibold text-slate-900 truncate">
                         {getConnectedAccountDisplayLabel(group.connectedAccount)}
                       </p>
@@ -784,7 +784,7 @@ export default async function DashboardCommentsPage({
                     <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-800">
                       {group.postText}
                     </p>
-                    <div className="mt-3 flex items-center gap-4 text-[11px] text-slate-400">
+                    <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-slate-400 sm:gap-4">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {getFormattableDate(group.publishedAt, intlLocale)}
@@ -802,7 +802,7 @@ export default async function DashboardCommentsPage({
               </div>
 
               {/* ── Comments list ── */}
-              <div className="draft-scroll-area flex-1 overflow-y-auto p-5 space-y-3">
+              <div className="draft-scroll-area flex-1 space-y-3 p-4 sm:p-5 lg:overflow-y-auto">
                 {group.moderationComments
                   .map((entry) => (
                     <CommentThread

@@ -207,7 +207,7 @@ export default async function DashboardPostedPage({
   };
 
   return (
-    <div className="mx-auto min-h-full max-w-[1600px] px-8 py-8 lg:px-10">
+    <div className="mx-auto min-h-full max-w-[1600px] px-4 py-5 sm:px-8 sm:py-8 lg:px-10">
       <DashboardToast
         toast={toast}
         clearKeys={[
@@ -220,9 +220,9 @@ export default async function DashboardPostedPage({
         ]}
       />
 
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-start justify-between gap-4 sm:items-center">
         <div className="flex items-center gap-2">
-          <h1 className="text-[28px] font-semibold tracking-tight text-slate-950">
+          <h1 className="text-[24px] font-semibold tracking-tight text-slate-950 sm:text-[28px]">
             {pageTitle}
           </h1>
           <span className="text-sm text-slate-400">ⓘ</span>
@@ -247,7 +247,7 @@ export default async function DashboardPostedPage({
         </form>
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center gap-3">
+      <div className="mt-5 flex flex-wrap items-center gap-2 sm:gap-3">
         <div className="p-2 text-slate-400">
           <Filter className="h-4 w-4" />
         </div>
@@ -323,7 +323,7 @@ export default async function DashboardPostedPage({
         </details>
       </div>
 
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
         <Link
           href={buildFilterHref({ status: "published" })}
           className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ${
@@ -375,7 +375,7 @@ export default async function DashboardPostedPage({
           {emptyMessage}
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {visiblePosts.map((post) => {
             const finishedAt =
               post.latest_publish_run?.finished_at ??
@@ -402,7 +402,7 @@ export default async function DashboardPostedPage({
             return (
               <article
                 key={post.id}
-                className="flex h-[320px] flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                className="flex h-[280px] flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md sm:h-[320px]"
               >
                 <div className="flex-1 overflow-y-auto p-5 pb-6">
                   <div className="flex items-center justify-between gap-4">

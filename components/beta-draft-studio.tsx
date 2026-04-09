@@ -337,8 +337,8 @@ function DraftGenerationOverlay({
   const currentLabel = stage === "preparing" ? labels.preparing : labels.generating;
 
   return (
-    <div className="absolute -inset-x-8 -inset-y-8 z-[100] flex flex-col items-center justify-start pt-[20vh] bg-white/65 backdrop-blur-[12px] rounded-3xl">
-      <div className="w-[340px] overflow-hidden flex flex-col items-center text-center rounded-[28px] border border-white/60 bg-white/80 px-8 py-10 shadow-[0_32px_64px_-12px_rgba(16,185,129,0.12)] backdrop-blur-2xl">
+    <div className="absolute -inset-x-3 -inset-y-4 z-[100] flex flex-col items-center justify-start rounded-3xl bg-white/65 pt-[16vh] backdrop-blur-[12px] sm:-inset-x-8 sm:-inset-y-8 sm:pt-[20vh]">
+      <div className="flex w-full max-w-[340px] flex-col items-center overflow-hidden rounded-[28px] border border-white/60 bg-white/80 px-6 py-8 text-center shadow-[0_32px_64px_-12px_rgba(16,185,129,0.12)] backdrop-blur-2xl sm:px-8 sm:py-10">
         <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-[18px] bg-emerald-50 border border-emerald-100 shadow-inner">
           <div className="absolute inset-0 rounded-[18px] bg-emerald-400/20 blur-xl animate-pulse" />
           <Sparkles className="relative z-10 h-6 w-6 text-emerald-500 animate-[pulse_2s_infinite]" />
@@ -522,7 +522,7 @@ function ThreadsPreviewCard({
           onUse(draft);
         }
       }}
-      className={`relative flex min-h-[220px] w-full flex-col bg-transparent px-5 py-5 text-left transition ${
+      className={`relative flex min-h-[220px] w-full flex-col bg-transparent px-4 py-4 text-left transition sm:px-5 sm:py-5 ${
         isPublished
           ? "bg-slate-100 text-slate-400"
           : selected
@@ -532,7 +532,7 @@ function ThreadsPreviewCard({
               : ""
       } ${isInteractive ? "cursor-pointer" : "cursor-default"}`}
     >
-      <div className="flex items-start gap-3">
+        <div className="flex items-start gap-3">
         {account ? (
           <div className="relative m-[4px]">
             <ConnectedAccountAvatar
@@ -553,8 +553,8 @@ function ThreadsPreviewCard({
             T
           </div>
         )}
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0 flex-1">
+          <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex min-w-0 items-center gap-1.5">
               <span className={`truncate text-[14px] font-bold ${isPublished ? "text-slate-500" : "text-[#1e2330]"}`}>
                 {accountLabel}
@@ -602,7 +602,7 @@ function ThreadsPreviewCard({
             )}
           </div>
 
-          <div className="mt-4 flex items-center gap-5 text-slate-400">
+          <div className="mt-4 flex flex-wrap items-center gap-4 text-slate-400 sm:gap-5">
             <div className="flex items-center gap-1.5">
               <Heart className="h-5 w-5" strokeWidth={1.8} />
               <span className="text-[13px]">0</span>
@@ -653,7 +653,7 @@ function ThreadsPreviewCard({
                       </div>
                     )}
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex flex-wrap items-center gap-1.5">
                         <span className={`truncate text-[13px] font-bold ${isPublished ? "text-slate-500" : "text-[#1e2330]"}`}>
                           {accountLabel}
                         </span>
@@ -753,7 +753,7 @@ function DraftPublishModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[460px] rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.18)]"
+        className="w-full max-w-[460px] rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_80px_rgba(15,23,42,0.18)] sm:p-6"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
@@ -795,7 +795,7 @@ function DraftPublishModal({
             <input type="hidden" name="postText" value={postText} />
             <input type="hidden" name="replyTextsJson" value={JSON.stringify(replyTexts)} />
             <input type="hidden" name="timezone" value={timezone} />
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <input
                 type="date"
                 name="scheduleDate"
@@ -1249,7 +1249,7 @@ export function BetaDraftStudio({
         ]}
       />
 
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <div className="flex items-center gap-1.5 text-[13px] font-medium text-slate-500">
           <Search className="h-4 w-4" />
           {t.searchFilter}
@@ -1262,7 +1262,7 @@ export function BetaDraftStudio({
 
       <div className="relative z-20 space-y-5 pointer-events-auto">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-          <div className="relative z-20 flex flex-wrap items-center gap-2.5">
+          <div className="relative z-20 flex items-center gap-2.5 overflow-x-auto pb-1 xl:flex-wrap xl:overflow-visible xl:pb-0">
               {accounts.map((account) => {
                 const isActive = selectedAccountIds.includes(account.id);
 
@@ -1338,14 +1338,14 @@ export function BetaDraftStudio({
           </div>
         ) : null}
 
-        <div className="relative z-20 grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="relative z-20 grid items-start gap-5 sm:gap-8 xl:grid-cols-[minmax(0,1fr)_360px]">
           <div className="relative z-20 mt-6 min-w-0 pointer-events-auto lg:mt-8">
-            <div className="mb-3 flex items-center justify-between gap-4">
+            <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="flex items-center gap-1.5 text-[14px] font-bold text-[#4b5563]">
                 {t.mainCaption}
                 <Info className="h-[14px] w-[14px] text-slate-400" />
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 {composeMode === "direct" ? (
                   <>
                     <button
@@ -1401,7 +1401,7 @@ export function BetaDraftStudio({
               </div>
             </div>
 
-            <div className="relative z-20 rounded-xl border border-[#e2e8f0] bg-white px-6 py-5 shadow-[0_4px_12px_rgba(0,0,0,0.03)] pointer-events-auto">
+            <div className="relative z-20 rounded-xl border border-[#e2e8f0] bg-white px-4 py-4 shadow-[0_4px_12px_rgba(0,0,0,0.03)] pointer-events-auto sm:px-6 sm:py-5">
               <textarea
                 value={composerText}
                 onChange={(event) => setComposerText(event.target.value)}
@@ -1505,9 +1505,9 @@ export function BetaDraftStudio({
                   {imageUploadError}
                 </p>
               ) : null}
-              <div className="mt-2 flex items-end justify-between gap-6 text-sm text-slate-400">
+              <div className="mt-2 flex flex-col items-start gap-2 text-sm text-slate-400 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
                 {composeMode === "ai" ? (
-                  <p className="max-w-[72%] text-[12px] leading-5">
+                  <p className="max-w-full text-[12px] leading-5 sm:max-w-[72%]">
                     {t.refineHint}
                   </p>
                 ) : (
@@ -1523,7 +1523,7 @@ export function BetaDraftStudio({
 
           <div className="relative z-20 pointer-events-auto">
             {composeMode === "direct" ? (
-              <div className="relative z-20 rounded-xl border border-[#e2e8f0] bg-white p-6 shadow-[0_4px_12px_rgba(0,0,0,0.03)] pointer-events-auto">
+              <div className="relative z-20 rounded-xl border border-[#e2e8f0] bg-white p-4 shadow-[0_4px_12px_rgba(0,0,0,0.03)] pointer-events-auto sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-[15px] font-bold text-[#1e2330]">
@@ -1618,7 +1618,7 @@ export function BetaDraftStudio({
                       </button>
                     </div>
 
-                    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_minmax(0,1fr)_24px] items-center gap-2">
+                    <div className="grid min-w-0 grid-cols-1 items-center gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_24px]">
                       <button
                         type="button"
                         onClick={() => openNativePicker(scheduleDateInputRef)}
@@ -1639,7 +1639,7 @@ export function BetaDraftStudio({
                           {scheduleTime || t.selectTime}
                         </span>
                       </button>
-                      <Info className="h-4 w-4 justify-self-center text-slate-400" />
+                      <Info className="hidden h-4 w-4 justify-self-center text-slate-400 sm:block" />
                     </div>
 
                     <input
@@ -1750,7 +1750,7 @@ export function BetaDraftStudio({
                   localStorage.setItem("hustle_draft_generating", id);
                   window.dispatchEvent(new Event("hustle_draft_started"));
                 }}
-                className="relative z-20 rounded-xl border border-[#e2e8f0] bg-white p-6 shadow-[0_4px_12px_rgba(0,0,0,0.03)] pointer-events-auto"
+                className="relative z-20 rounded-xl border border-[#e2e8f0] bg-white p-4 shadow-[0_4px_12px_rgba(0,0,0,0.03)] pointer-events-auto sm:p-6"
               >
                 <input type="hidden" name="connectedAccountId" value={primarySelectedAccount?.id ?? ""} />
                 <input type="hidden" name="workspaceId" value={activeWorkspace.id} />
@@ -1841,7 +1841,7 @@ export function BetaDraftStudio({
         </div>
       </div>
 
-      <div className="grid gap-8 xl:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3 xl:gap-8">
         {(
           [
             ["informational", groupedDrafts.informational],
@@ -1861,7 +1861,7 @@ export function BetaDraftStudio({
               </div>
             </div>
 
-            <div className="relative h-[700px] overflow-hidden rounded-[36px] border-[5px] border-[#1e2330] bg-white shadow-sm">
+            <div className="relative h-[520px] overflow-hidden rounded-[28px] border-[4px] border-[#1e2330] bg-white shadow-sm sm:h-[620px] sm:rounded-[36px] sm:border-[5px] xl:h-[700px]">
               <div
                 ref={(node) => {
                   scrollAreaRefs.current[type] = node;

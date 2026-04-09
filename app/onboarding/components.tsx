@@ -28,7 +28,7 @@ export function RoleSelectionForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
       <div className="space-y-3">
         {ROLES.map((role) => {
           const isActive = selectedRole === role.id;
@@ -74,7 +74,7 @@ export function RoleSelectionForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-8 flex w-full cursor-pointer items-center justify-center rounded-full bg-[#65C984] py-4 text-[15px] font-bold text-[#11301F] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#58B975] disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-6 flex w-full cursor-pointer items-center justify-center rounded-full bg-[#65C984] py-4 text-[15px] font-bold text-[#11301F] shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#58B975] disabled:cursor-not-allowed disabled:opacity-50 sm:mt-8"
       >
         {pending ? (
           <div className="flex items-center gap-2">
@@ -99,11 +99,11 @@ export function PricingDummyStep() {
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-6 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-3 sm:gap-6">
         {["Starter", "Pro", "Agency"].map((plan, i) => (
           <div
             key={plan}
-            className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-all hover:border-[#65C984] hover:shadow-md"
+            className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-all hover:border-[#65C984] hover:shadow-md sm:p-8"
           >
             <h3 className="text-xl font-bold text-slate-900">{plan}</h3>
             <p className="text-sm text-slate-500">Dummy tier for onboarding</p>
@@ -132,7 +132,7 @@ export function WorkspaceCreateSubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[#11301F] px-8 py-3.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+      className="inline-flex w-full cursor-pointer items-center justify-center rounded-full bg-[#11301F] px-8 py-3.5 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       aria-busy={pending}
     >
       {pending ? (

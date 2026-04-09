@@ -46,7 +46,7 @@ export default async function DashboardConnectionsPage({
           : null;
 
   return (
-    <div className="mx-auto max-w-[1560px] px-8 py-8 lg:px-10 lg:py-10">
+    <div className="mx-auto max-w-[1560px] px-4 py-5 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
       <DashboardToast
         toast={feedback}
         clearKeys={["connected", "disconnected", "error"]}
@@ -55,7 +55,7 @@ export default async function DashboardConnectionsPage({
       <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <p className="text-sm font-medium text-slate-500">{t.eyebrow}</p>
-          <h1 className="mt-2 text-[30px] font-bold tracking-tight text-slate-950">
+          <h1 className="mt-2 text-[26px] font-bold tracking-tight text-slate-950 sm:text-[30px]">
             {t.title}
           </h1>
           <p className="mt-3 text-[15px] leading-7 text-slate-600">
@@ -65,7 +65,7 @@ export default async function DashboardConnectionsPage({
 
         <a
           href="/api/oauth/threads?redirectTo=/dashboard/connections"
-          className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+          className="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
         >
           {t.connect}
         </a>

@@ -11,17 +11,6 @@ import type {
 } from "@/app/dashboard/queue-actions";
 import { ConnectedAccountAvatar } from "@/components/connected-account-avatar";
 
-function formatLocalizedTime(timeStr: string, locale: Locale | string): string {
-  try {
-    const [h, m] = timeStr.split(":");
-    const d = new Date();
-    d.setHours(Number(h), Number(m));
-    return new Intl.DateTimeFormat(locale, { timeStyle: "short" }).format(d);
-  } catch {
-    return timeStr;
-  }
-}
-
 function formatCustomAMPM(timeStr: string) {
   try {
     const [hRaw, m] = timeStr.split(":");
@@ -301,20 +290,20 @@ export function QueueScheduleEditor({
   };
 
   return (
-    <form action={saveAction} className="space-y-8">
+    <form action={saveAction} className="space-y-6 sm:space-y-8">
       <input type="hidden" name="workspaceId" value={workspaceId} />
       <input type="hidden" name="redirectTo" value={redirectTo} />
       <input type="hidden" name="queueSettings" value={serializedSettings} />
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_400px] items-start">
+      <div className="grid items-start gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
         {/* Left Panel: Queue Schedule */}
-        <section className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm flex flex-col min-h-0">
+        <section className="flex min-h-0 flex-col rounded-[20px] border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[24px] sm:p-6">
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center justify-between">
             <div className="flex-1 min-w-0">
               <h2 className="text-[20px] font-bold text-slate-900 tracking-tight">
                 {copy.title}
               </h2>
-              <p className="mt-1 text-[13px] text-slate-500 leading-relaxed truncate">
+              <p className="mt-1 text-[13px] leading-relaxed text-slate-500 sm:truncate">
                 {copy.description}
               </p>
             </div>
@@ -323,7 +312,7 @@ export function QueueScheduleEditor({
             </div>
           </div>
 
-          <div className="mb-6 flex flex-col sm:flex-row gap-4 w-full">
+          <div className="mb-6 flex w-full flex-col gap-4 sm:flex-row">
             <label className="flex-1 space-y-1.5 min-w-0">
               <span className="text-[12px] font-bold text-slate-500 uppercase tracking-widest pl-1">
                 {copy.timezone}
@@ -383,7 +372,7 @@ export function QueueScheduleEditor({
                 <div
                   key={slot.id}
                   onClick={() => setSelectedSlotId(slot.id)}
-                  className={`group relative flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 rounded-3xl p-3 sm:p-4 transition-all cursor-pointer border bg-white ${
+                  className={`group relative flex cursor-pointer flex-col items-stretch justify-between gap-4 rounded-3xl border bg-white p-3 transition-all sm:flex-row sm:items-center sm:p-4 ${
                     isActive
                       ? "border-emerald-400 shadow-[0_8px_30px_rgba(16,185,129,0.12)] ring-1 ring-emerald-500 z-10"
                       : slot.enabled
@@ -391,9 +380,9 @@ export function QueueScheduleEditor({
                         : "border-slate-100 bg-slate-50/50 opacity-60 hover:opacity-100"
                   }`}
                 >
-                  <div className="flex items-center gap-3 sm:gap-[22px] w-full sm:flex-1 relative z-10 min-w-0">
+                  <div className="relative z-10 flex min-w-0 w-full flex-col gap-3 sm:flex-1 sm:flex-row sm:items-center sm:gap-[22px]">
                     {/* Time Input via Fake Overlay Overlaying Native Input */}
-                    <div className="relative w-[140px] h-[48px] shrink-0">
+                    <div className="relative h-[48px] w-full shrink-0 sm:w-[140px]">
                       <div className={`absolute inset-0 flex items-center justify-between pl-4 pr-3.5 rounded-[20px] transition-all border ${
                         isActive 
                            ? "border-emerald-300 bg-emerald-50/40 shadow-sm" 
@@ -424,7 +413,7 @@ export function QueueScheduleEditor({
                     </div>
 
                     {/* Weekdays - Enforce rigid circles */}
-                    <div className="flex items-center gap-1 sm:gap-1.5 w-[280px] shrink-0 justify-between sm:justify-start">
+                    <div className="flex w-full flex-wrap items-center gap-2 sm:w-[280px] sm:flex-nowrap sm:gap-1.5 sm:justify-start">
                       {slot.days.map((dayEnabled, dayIndex) => (
                         <button
                           key={`${slot.id}-${dayIndex}`}
@@ -438,11 +427,11 @@ export function QueueScheduleEditor({
                               ),
                             }));
                           }}
-                          className={`flex aspect-square shrink-0 w-9 sm:w-[38px] items-center justify-center rounded-full transition-all border ${
+                          className={`flex aspect-square w-9 shrink-0 items-center justify-center rounded-full border text-[13px] transition-all sm:w-[38px] sm:text-[14px] ${
                             dayEnabled
                               ? "bg-emerald-500 border-emerald-500 text-white shadow-md shadow-emerald-500/20 font-bold"
                               : "bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-600 font-medium"
-                          } text-[13px] sm:text-[14px]`}
+                          }`}
                         >
                            {dayEnabled ? "✓" : copy.weekdaysShort[dayIndex]}
                         </button>
@@ -451,12 +440,12 @@ export function QueueScheduleEditor({
                   </div>
 
                   {/* Right side: Source Mode Info and Delete Button */}
-                  <div className={`flex items-center justify-between sm:justify-end w-full sm:w-auto mt-3 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-t-0 shrink-0 ${isActive ? "border-emerald-100" : "border-slate-100"}`}>
-                    <div className="flex flex-col items-start sm:items-end justify-center leading-tight">
+                  <div className={`flex w-full shrink-0 flex-col items-start gap-3 border-t pt-3 sm:mt-0 sm:w-auto sm:flex-row sm:items-center sm:justify-end sm:border-t-0 sm:pt-0 ${isActive ? "border-emerald-100" : "border-slate-100"}`}>
+                    <div className="flex min-w-0 flex-col items-start justify-center leading-tight sm:items-end">
                        <span className={`text-[13px] font-bold ${isActive ? "text-emerald-900" : "text-slate-800"}`}>
                          {getSourceModeLabel(slot.sourceMode, slot.aiType, copy)}
                        </span>
-                       <span className={`text-[11px] font-medium truncate max-w-[140px] mt-1 px-2.5 py-1 rounded-[10px] border ${isActive ? "bg-emerald-50 text-emerald-700 border-emerald-200/50" : "bg-slate-50 border-slate-200 text-slate-500"}`}>
+                       <span className={`mt-1 max-w-full rounded-[10px] border px-2.5 py-1 text-[11px] font-medium sm:max-w-[140px] sm:truncate ${isActive ? "bg-emerald-50 text-emerald-700 border-emerald-200/50" : "bg-slate-50 border-slate-200 text-slate-500"}`}>
                          {getSlotAccountsSummary({
                            connectedAccountIds: slot.connectedAccountIds,
                            availableAccounts,
@@ -465,7 +454,7 @@ export function QueueScheduleEditor({
                        </span>
                     </div>
 
-                    <div className="flex items-center pl-2 sm:pl-4">
+                    <div className="flex items-center self-end sm:self-auto sm:pl-4">
                        <button
                          type="button"
                          onClick={(e) => {
@@ -497,7 +486,7 @@ export function QueueScheduleEditor({
 
         {/* Right Panel: Source Mode Editor */}
         <aside className="space-y-6">
-          <section className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm sticky top-24">
+          <section className="rounded-[20px] border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[24px] sm:p-6 xl:sticky xl:top-24">
             <div className="mb-6 flex flex-col border-b border-slate-100 pb-5">
               <div className="flex items-center justify-between">
                 <h3 className="text-[18px] font-bold text-slate-900 tracking-tight">

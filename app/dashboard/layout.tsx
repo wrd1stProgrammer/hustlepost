@@ -103,7 +103,7 @@ export default async function DashboardLayout({
   ];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#f4f5f8] text-slate-900 font-sans">
+    <div className="min-h-screen bg-[#f4f5f8] text-slate-900 font-sans lg:flex lg:h-screen lg:overflow-hidden">
       <DashboardSidebar 
         copy={copy}
         locale={locale}
@@ -118,7 +118,7 @@ export default async function DashboardLayout({
         activeWorkspaceId={activeWorkspace.id}
         selectWorkspaceAction={selectWorkspaceAction}
       />
-      <main className="relative z-10 flex-1 overflow-y-auto bg-[#f4f5f8]">
+      <main className="relative z-10 min-w-0 flex-1 overflow-x-hidden bg-[#f4f5f8] lg:overflow-y-auto">
         {children}
       </main>
     </div>

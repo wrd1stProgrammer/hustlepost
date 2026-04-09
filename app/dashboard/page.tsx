@@ -111,9 +111,9 @@ export default async function DashboardComposePage({
                       : null;
 
   return (
-    <div className="relative z-20 mx-auto min-h-full max-w-[1660px] isolate px-7 py-7 lg:px-9 lg:py-8">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-[28px] font-bold tracking-tight text-[#2f394c]">
+    <div className="relative z-20 mx-auto min-h-full max-w-[1660px] isolate px-4 py-5 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
+      <div className="mb-5 flex items-center justify-between sm:mb-6">
+        <h1 className="text-[24px] font-bold tracking-tight text-[#2f394c] sm:text-[28px]">
           {t.title}
         </h1>
       </div>

@@ -13,7 +13,7 @@ export default async function PrivacyPolicyPage({
   const copy = getPrivacyCopy(locale);
 
   return (
-    <main className="min-h-screen bg-[#F5F6F7] px-6 py-12 text-slate-900">
+    <main className="min-h-dvh bg-[#F5F6F7] px-4 py-8 text-slate-900 sm:px-6 sm:py-12">
       <div className="mx-auto max-w-4xl space-y-8">
         <Link
           href={buildPathWithSearch("/", { lang: locale })}
@@ -23,8 +23,8 @@ export default async function PrivacyPolicyPage({
           {copy.backToHome}
         </Link>
 
-        <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-950">{copy.title}</h1>
+        <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+          <h1 className="text-[2rem] font-bold tracking-tight text-slate-950 sm:text-3xl">{copy.title}</h1>
           <p className="mt-2 text-sm text-slate-500">
             {copy.lastUpdatedLabel}: {copy.lastUpdatedDate}
           </p>

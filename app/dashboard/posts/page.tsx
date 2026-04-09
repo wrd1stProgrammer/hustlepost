@@ -50,9 +50,9 @@ export default async function DashboardAllPostsPage({
   });
 
   return (
-    <div className="p-8 lg:p-12 max-w-[1600px] mx-auto min-h-full">
-      <div className="flex items-center justify-between mb-8">
-         <h1 className="text-3xl font-semibold tracking-tight text-slate-900 flex items-center gap-2">
+    <div className="mx-auto min-h-full max-w-[1600px] px-4 py-5 sm:p-8 lg:p-12">
+      <div className="mb-6 flex items-start justify-between gap-4 sm:mb-8 sm:items-center">
+         <h1 className="flex items-center gap-2 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-3xl">
            {t.title}
            <span className="text-slate-400 text-sm font-normal cursor-help" title={t.info}>ⓘ</span>
          </h1>
@@ -61,7 +61,7 @@ export default async function DashboardAllPostsPage({
          </button>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 mb-8">
+      <div className="mb-6 flex flex-wrap items-center gap-2 sm:mb-8 sm:gap-3">
         <div className="p-2 text-slate-400 pr-1"><Filter className="h-4 w-4" /></div>
         
         <button className="flex items-center gap-2 px-3 py-1.5 border border-slate-200 bg-slate-100 rounded-lg text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-200 transition-colors">
@@ -87,7 +87,7 @@ export default async function DashboardAllPostsPage({
           {t.empty}
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {scheduledPosts.map((post) => {
             const scheduledAt = post.scheduled_for;
             const replyTexts = getScheduledPostReplyTexts({
@@ -107,7 +107,7 @@ export default async function DashboardAllPostsPage({
             return (
               <article
                 key={post.id}
-                className="flex h-[320px] flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                className="flex h-[280px] flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md sm:h-[320px]"
               >
                 <div className="flex-1 overflow-y-auto p-5 pb-6">
                   <div className="flex items-center justify-between gap-4">

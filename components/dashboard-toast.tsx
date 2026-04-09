@@ -86,7 +86,7 @@ export function DashboardToast({
           };
 
   return (
-    <div className="pointer-events-none fixed right-6 top-6 z-[120] flex w-[min(420px,calc(100vw-32px))] justify-end">
+    <div className="pointer-events-none fixed inset-x-4 top-4 z-[120] flex justify-end sm:left-auto sm:right-6 sm:top-6 sm:w-[min(420px,calc(100vw-32px))]">
       <div
         aria-live="polite"
         className={`pointer-events-auto flex w-full items-start gap-3 rounded-2xl border px-4 py-3 text-sm font-medium backdrop-blur-sm transition ${tone.container}`}

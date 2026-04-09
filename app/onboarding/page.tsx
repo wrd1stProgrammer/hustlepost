@@ -46,12 +46,12 @@ export default async function OnboardingPage({
   // Step 1: Role Selection
   if (!profile?.role) {
     return (
-      <div className="min-h-screen bg-[#f4f6fa] px-6 py-10 text-slate-900 lg:px-10 flex flex-col items-center justify-center">
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-[#f4f6fa] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 lg:px-10">
         <div className="w-full max-w-md">
           <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500 text-center">
             Welcome to Hustle Post
           </p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 text-center mb-8">
+          <h1 className="mt-3 mb-6 text-center text-[2rem] font-semibold tracking-tight text-slate-950 sm:mb-8 sm:text-3xl">
             How will you use Hustle Post?
           </h1>
           <RoleSelectionForm />
@@ -70,22 +70,22 @@ export default async function OnboardingPage({
   // Step 2: Workspace Creation (Required)
   if (workspaceState.workspaces.length === 0) {
     return (
-      <div className="min-h-screen bg-[#f4f6fa] px-6 py-10 text-slate-900 lg:px-10">
+      <div className="min-h-dvh bg-[#f4f6fa] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 lg:px-10">
         <div className="mx-auto flex max-w-[800px] flex-col gap-8 lg:gap-10">
           <div className="">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
               Workspace Setup
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950">
+            <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-slate-950 sm:text-4xl">
               Create your first workspace
             </h1>
-            <p className="mt-4 text-base leading-8 text-slate-600 max-w-2xl">
+            <p className="mt-4 max-w-2xl text-[15px] leading-7 text-slate-600 sm:text-base sm:leading-8">
               Workspaces isolate your draft-generation rules. Provide three core keywords,
               describe your audience and core product, and define the behavior for each content angle.
             </p>
           </div>
 
-          <section className="rounded-[32px] border border-slate-200 bg-white p-7 sm:p-10 shadow-sm relative">
+          <section className="relative rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm sm:rounded-[32px] sm:p-10">
             {params.error === "workspace_create_failed" ? (
               <div className="mb-6 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
                 Workspace creation failed. Please retry once.
@@ -183,7 +183,7 @@ export default async function OnboardingPage({
                 </div>
               </div>
 
-              <div className="flex justify-end pt-4">
+              <div className="flex pt-4">
                 <WorkspaceCreateSubmitButton />
               </div>
             </form>
@@ -196,21 +196,21 @@ export default async function OnboardingPage({
   // Step 3: Connect Threads
   if (threadAccounts.length === 0) {
     return (
-      <div className="min-h-screen bg-[#f4f6fa] px-6 py-10 text-slate-900 lg:px-10 flex flex-col items-center justify-center">
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-[#f4f6fa] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 lg:px-10">
         <div className="w-full max-w-xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500 mb-3">
             Publishing setup
           </p>
-          <h1 className="text-4xl font-semibold tracking-tight text-slate-950 mb-4">
+          <h1 className="mb-4 text-[2rem] font-semibold tracking-tight text-slate-950 sm:text-4xl">
             Connect a Threads account
           </h1>
-          <p className="text-base text-slate-600 mb-10 max-w-md mx-auto">
+          <p className="mx-auto mb-8 max-w-md text-[15px] text-slate-600 sm:mb-10 sm:text-base">
             To automatically publish posts from your workspace, link at least one Threads destination now. 
             You&apos;ll automatically return here right after successfully providing authorization.
           </p>
           <a
             href="/api/oauth/threads?redirectTo=/onboarding"
-            className="inline-flex cursor-pointer items-center justify-center rounded-full border border-[#1e7f52] bg-[#20c997] px-10 py-4 text-base font-bold text-[#0b1d14] transition-all hover:-translate-y-0.5 hover:bg-[#19b986] hover:shadow-[0_10px_24px_-8px_rgba(32,201,151,0.55)]"
+            className="inline-flex w-full cursor-pointer items-center justify-center rounded-full border border-[#1e7f52] bg-[#20c997] px-10 py-4 text-base font-bold text-[#0b1d14] transition-all hover:-translate-y-0.5 hover:bg-[#19b986] hover:shadow-[0_10px_24px_-8px_rgba(32,201,151,0.55)] sm:w-auto"
           >
             Connect Threads
           </a>
@@ -221,12 +221,12 @@ export default async function OnboardingPage({
 
   // Step 4: Pricing Dummy
   return (
-    <div className="min-h-screen bg-[#f4f6fa] px-6 py-10 text-slate-900 lg:px-10 flex flex-col items-center justify-center">
+    <div className="flex min-h-dvh flex-col items-center justify-center bg-[#f4f6fa] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 lg:px-10">
       <div className="w-full max-w-4xl text-center">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500 mb-3">
           Last step
         </p>
-        <h1 className="text-4xl font-semibold tracking-tight text-slate-950 mb-10">
+        <h1 className="mb-8 text-[2rem] font-semibold tracking-tight text-slate-950 sm:mb-10 sm:text-4xl">
           Choose a plan
         </h1>
         <PricingDummyStep />

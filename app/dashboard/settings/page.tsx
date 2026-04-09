@@ -253,9 +253,9 @@ export default async function DashboardSettingsPage({
   const tabHref = (tab: SettingsTab) => appendQuery(params, tab);
 
   return (
-    <div className="relative z-20 mx-auto min-h-full max-w-[1660px] isolate px-7 py-7 lg:px-9 lg:py-8">
+    <div className="relative z-20 mx-auto min-h-full max-w-[1660px] isolate px-4 py-5 sm:px-7 sm:py-7 lg:px-9 lg:py-8">
       <div className="mb-6">
-        <h1 className="text-[28px] font-bold tracking-tight text-[#2f394c]">
+        <h1 className="text-[24px] font-bold tracking-tight text-[#2f394c] sm:text-[28px]">
           {copy.title}
         </h1>
         <p className="mt-2 max-w-3xl text-[15px] leading-6 text-slate-500">
@@ -263,7 +263,7 @@ export default async function DashboardSettingsPage({
         </p>
       </div>
 
-      <div className="mb-7 flex flex-wrap gap-6 border-b border-slate-200">
+      <div className="-mx-1 mb-7 flex gap-4 overflow-x-auto border-b border-slate-200 px-1 sm:flex-wrap sm:gap-6 sm:overflow-visible">
         {(
           [
             { key: "settings", label: copy.tabs.settings },
@@ -277,7 +277,7 @@ export default async function DashboardSettingsPage({
             <Link
               key={tab.key}
               href={tabHref(tab.key)}
-              className={`relative pb-4 text-[18px] font-semibold transition ${
+              className={`relative shrink-0 pb-4 text-[16px] font-semibold transition sm:text-[18px] ${
                 isActive ? "text-[#3ccf7a]" : "text-slate-500 hover:text-slate-800"
               }`}
             >
@@ -336,12 +336,12 @@ export default async function DashboardSettingsPage({
         />
       ) : activeTab === "settings" ? (
         <div className="space-y-6">
-          <section className="rounded-[28px] border border-slate-200 bg-white px-8 py-7 shadow-sm">
+          <section className="rounded-[24px] border border-slate-200 bg-white px-5 py-5 shadow-sm sm:rounded-[28px] sm:px-8 sm:py-7">
             <h2 className="text-[22px] font-semibold tracking-tight text-slate-800">
               {copy.profile.title}
             </h2>
-            <div className="mt-6 flex flex-col gap-6 md:flex-row md:items-start">
-              <div className="flex h-[92px] w-[92px] shrink-0 items-center justify-center rounded-full bg-violet-500 text-[36px] font-semibold text-white">
+            <div className="mt-6 flex flex-col gap-5 sm:gap-6 md:flex-row md:items-start">
+              <div className="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-full bg-violet-500 text-[28px] font-semibold text-white sm:h-[92px] sm:w-[92px] sm:text-[36px]">
                 {getInitials(profileState.displayName)}
               </div>
               <div className="w-full max-w-[940px]">
@@ -350,16 +350,16 @@ export default async function DashboardSettingsPage({
                   <label className="block text-[15px] font-medium text-slate-500">
                     {copy.profile.displayNameLabel}
                   </label>
-                  <div className="mt-2 flex flex-wrap items-center gap-3">
+                  <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                     <input
                       name="displayName"
                       defaultValue={profileState.displayName}
                       maxLength={60}
-                      className="h-12 min-w-[320px] flex-1 rounded-xl border border-slate-300 bg-white px-4 text-[15px] text-slate-900 outline-none ring-0 placeholder:text-slate-400 focus:border-slate-400"
+                      className="h-12 w-full min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 text-[15px] text-slate-900 outline-none ring-0 placeholder:text-slate-400 focus:border-slate-400"
                     />
                     <button
                       type="submit"
-                      className="h-12 rounded-xl bg-slate-200 px-7 text-[15px] font-semibold text-slate-700 transition hover:bg-slate-300"
+                      className="h-12 w-full rounded-xl bg-slate-200 px-7 text-[15px] font-semibold text-slate-700 transition hover:bg-slate-300 sm:w-auto"
                     >
                       {copy.profile.save}
                     </button>
@@ -380,7 +380,7 @@ export default async function DashboardSettingsPage({
             </div>
           </section>
 
-          <section className="rounded-[28px] border border-slate-200 bg-white px-8 py-7 shadow-sm">
+          <section className="rounded-[24px] border border-slate-200 bg-white px-5 py-5 shadow-sm sm:rounded-[28px] sm:px-8 sm:py-7">
             <h2 className="text-[22px] font-semibold tracking-tight text-slate-800">
               {copy.account.title}
             </h2>
@@ -444,7 +444,7 @@ export default async function DashboardSettingsPage({
             </div>
           </section>
 
-          <section className="rounded-[28px] border border-slate-200 bg-white px-8 py-7 shadow-sm">
+          <section className="rounded-[24px] border border-slate-200 bg-white px-5 py-5 shadow-sm sm:rounded-[28px] sm:px-8 sm:py-7">
             <h2 className="text-[22px] font-semibold tracking-tight text-slate-800">
               {copy.security.title}
             </h2>
@@ -462,7 +462,7 @@ export default async function DashboardSettingsPage({
             </form>
           </section>
 
-          <section className="rounded-[28px] border border-slate-200 bg-white px-8 py-7 shadow-sm">
+          <section className="rounded-[24px] border border-slate-200 bg-white px-5 py-5 shadow-sm sm:rounded-[28px] sm:px-8 sm:py-7">
             <h2 className="text-[22px] font-semibold tracking-tight text-slate-800">
               {copy.emailPreferences.title}
             </h2>
@@ -470,7 +470,7 @@ export default async function DashboardSettingsPage({
               <input type="hidden" name="redirectTo" value={tabHref("settings")} />
 
               <div className="divide-y divide-slate-200">
-                <div className="flex items-center justify-between gap-4 py-5">
+                <div className="flex items-start justify-between gap-4 py-5">
                   <div>
                     <p className="text-[18px] font-semibold text-slate-800">
                       {copy.emailPreferences.automationTitle}
@@ -491,7 +491,7 @@ export default async function DashboardSettingsPage({
                   </label>
                 </div>
 
-                <div className="flex items-center justify-between gap-4 py-5">
+                <div className="flex items-start justify-between gap-4 py-5">
                   <div>
                     <p className="text-[18px] font-semibold text-slate-800">
                       {copy.emailPreferences.failureTitle}
@@ -527,8 +527,8 @@ export default async function DashboardSettingsPage({
           </section>
         </div>
       ) : activeTab === "billing" ? (
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-          <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm md:p-7">
+        <div className="grid gap-5 sm:gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+          <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm md:p-7">
             <div className="mb-5">
               <p className="text-[22px] font-semibold tracking-tight text-slate-900">
                 {copy.billing.title}
@@ -600,7 +600,7 @@ export default async function DashboardSettingsPage({
           </section>
 
           <div className="space-y-6">
-            <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:rounded-[28px] sm:p-6">
               <div className="flex items-start gap-3">
                 <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5">
                   <CreditCard className="h-5 w-5 text-slate-600" />
@@ -624,7 +624,7 @@ export default async function DashboardSettingsPage({
               </button>
             </section>
 
-            <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:rounded-[28px] sm:p-6">
               <div className="flex items-center gap-3">
                 <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5">
                   <ReceiptText className="h-5 w-5 text-slate-600" />
@@ -639,7 +639,7 @@ export default async function DashboardSettingsPage({
           </div>
         </div>
       ) : (
-        <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm md:p-7">
+        <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm md:p-7">
           <p className="text-[22px] font-semibold tracking-tight text-slate-900">
             {copy.plans.title}
           </p>

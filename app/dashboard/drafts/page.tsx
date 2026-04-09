@@ -95,14 +95,14 @@ export default async function DashboardDraftsPage({
             : null;
 
   return (
-    <div className="p-8 lg:p-12 max-w-[1600px] mx-auto min-h-full">
+    <div className="mx-auto min-h-full max-w-[1600px] px-4 py-5 sm:p-8 lg:p-12">
       <DashboardToast
         toast={toast}
         clearKeys={["published", "published_count", "scheduled", "scheduled_count", "deleted", "error"]}
       />
 
-      <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-900">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-3xl">
           {t.title}
         </h1>
       </div>
@@ -112,7 +112,7 @@ export default async function DashboardDraftsPage({
           {t.empty}
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {draftPosts.map((post) => {
             const replyTexts = getScheduledPostReplyTexts({
               replyTexts: post.reply_texts,
@@ -132,7 +132,7 @@ export default async function DashboardDraftsPage({
             return (
               <article
                 key={post.id}
-                className="flex h-[320px] flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                className="flex h-[280px] flex-col overflow-hidden rounded-[20px] border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md sm:h-[320px]"
               >
                 <div className="flex-1 overflow-y-auto p-5 pb-6">
                   <div className="flex items-center justify-between gap-4">

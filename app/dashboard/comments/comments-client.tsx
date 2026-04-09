@@ -28,7 +28,7 @@ export function ReplyForm({
           await action(formData);
         });
       }}
-      className="mt-3 ml-6"
+      className="mt-3 ml-0 sm:ml-6"
     >
       {Object.entries(hiddenFields).map(([name, value]) => (
         <input key={name} type="hidden" name={name} value={value} />
@@ -40,7 +40,7 @@ export function ReplyForm({
         disabled={isPending}
         className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-300 focus:ring-1 focus:ring-slate-200 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
       />
-      <div className="mt-2 flex items-center justify-between gap-3">
+      <div className="mt-2 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[11px] text-slate-400">{hint}</p>
         <button
           type="submit"

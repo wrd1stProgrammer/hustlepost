@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import { useState } from "react";
 import type { ConnectedAccountRecord } from "@/lib/types/db";
 import {
   getConnectedAccountAvatarCandidates,
@@ -27,22 +28,19 @@ export function ConnectedAccountAvatar({
   className = "",
   initialsClassName = "",
 }: ConnectedAccountAvatarProps) {
-  const avatarCandidates = useMemo(
-    () => getConnectedAccountAvatarCandidates(account),
-    [
-      account.platform,
-      account.platform_user_id,
-      account.username,
-      account.display_name,
-      account.avatar_url,
-    ],
-  );
-  const [avatarIndex, setAvatarIndex] = useState(0);
-
-  useEffect(() => {
-    setAvatarIndex(0);
-  }, [avatarCandidates]);
-
+  const avatarCandidates = getConnectedAccountAvatarCandidates(account);
+  const accountKey = [
+    account.platform,
+    account.platform_user_id,
+    account.username,
+    account.display_name,
+    account.avatar_url,
+  ].join("|");
+  const [avatarState, setAvatarState] = useState<{ key: string; index: number }>({
+    key: accountKey,
+    index: 0,
+  });
+  const avatarIndex = avatarState.key === accountKey ? avatarState.index : 0;
   const avatarUrl = avatarCandidates[avatarIndex] ?? null;
   const initial = getConnectedAccountInitial(account);
 
@@ -55,17 +53,26 @@ export function ConnectedAccountAvatar({
         className={`flex h-full w-full items-center justify-center rounded-full ring-[3px] ring-offset-2 ring-offset-[#f4f5f8] ${ringColorClassName}`}
       >
         {avatarUrl ? (
-          <img
+          <Image
             src={avatarUrl}
             alt=""
+            width={size}
+            height={size}
+            unoptimized
             referrerPolicy="no-referrer"
             className="h-full w-full rounded-full object-cover"
             onError={() => {
-              setAvatarIndex((current) =>
-                current < avatarCandidates.length - 1
-                  ? current + 1
-                  : avatarCandidates.length,
-              );
+              setAvatarState((current) => {
+                const currentIndex = current.key === accountKey ? current.index : 0;
+
+                return {
+                  key: accountKey,
+                  index:
+                    currentIndex < avatarCandidates.length - 1
+                      ? currentIndex + 1
+                      : avatarCandidates.length,
+                };
+              });
             }}
           />
         ) : (
